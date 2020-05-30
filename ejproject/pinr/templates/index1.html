@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Page Title</title>
+    <meta charset = "UTF-8">
+    <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+</head>
+<body>
+
+    <script>
+        $(document).ready(function(e){
+            $('.btn1').click(function(){
+                $('.iframe').attr('src',"{% url 'side1'%}");
+            })
+            $('.btn2').click(function(){
+                $('.iframe').attr('src',"{% url 'side2'%}");
+            })
+        });
+    </script>
+    <nav class="menu_bar">
+        <ul>
+            <li><button class='btn1'>길찾기</button></li>
+            <li><button class='btn2'>장소검색</button></li>
+        </ul>
+    </nav>
+    <iframe class='iframe' style="display:block; width:30%; height: 100vh" src ="{% url 'side1'%}"></iframe>
+</body>
+
+</html>
