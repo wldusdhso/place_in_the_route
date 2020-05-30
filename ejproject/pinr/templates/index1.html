@@ -5,25 +5,121 @@
     <meta charset = "UTF-8">
     <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
 </head>
-<body>
+<style>
 
-    <script>
-        $(document).ready(function(e){
-            $('.btn1').click(function(){
-                $('.iframe').attr('src',"{% url 'side1'%}");
-            })
-            $('.btn2').click(function(){
-                $('.iframe').attr('src',"{% url 'side2'%}");
-            })
+    html, body {
+        height: 100%;
+        width: 100%;
+    }
+    .sidebar{
+        height: 100%;
+        width: 300px;
+        float: left;
+        border: solid black 1px;
+    }
+    .main{
+        height: 100%;
+        float:left;
+        border: solid black 1px;
+    }
+    .sidebar-up {
+        height: 30%;
+        display: grid;
+        grid-template-rows: repeat(3, 1fr);
+    }
+    
+    .sidebar-up div {
+        margin: 1em;
+    }
+    
+    .sidebar-up div input {
+        height: 100%;
+        width: 100%;
+    }
+    
+    .sidebar-up .reset {
+        height: 100%;
+    }
+    
+    .sidebar-up .search{
+        height: 100%;
+        float: right;
+    }
+    
+    .sidebar-down {
+        height: 70%;
+    }
+    
+    .sidebar-down div{
+        height: 100%;
+        margin: 1em;
+        border: solid black 1px;
+    }
+</style>
+<script>
+    $(document).ready(function(e) {
+            $('.show2').hide(); //페이지를 로드할 때 숨길 요소
+            $('.show1').show(); //페이지를 로드할 때 표시할 요소
+        $('.btn2').click(function(){
+            $ ('.show1').hide(); //클릭 시 첫 번째 요소 숨김
+            $ ('.show2').show(); //클릭 시 두 번째 요소 표시
         });
-    </script>
-    <nav class="menu_bar">
-        <ul>
-            <li><button class='btn1'>길찾기</button></li>
-            <li><button class='btn2'>장소검색</button></li>
-        </ul>
-    </nav>
-    <iframe class='iframe' style="display:block; width:30%; height: 100vh" src ="{% url 'side1'%}"></iframe>
+        $('.btn1').click(function(){
+            $('.show2').hide(); //페이지를 로드할 때 숨길 요소
+            $('.show1').show(); //페이지를 로드할 때 표시할 요소
+        })
+    });
+</script>
+
+<body>
+        <button class='btn1'>길찾기</button>
+        <button class='btn2'>장소검색</button>
+    <div class="sidebar">
+
+        <div class="show1">
+            <div class="sidebar-up">
+                <div class="search-start">
+                    <input type="text">
+                </div>
+                <div class="search-end">
+                    <input type="text">
+                </div>
+                <div class="search-buttons">
+                    <button class="reset">다시</button>
+                    <button class="search">검색</button>
+                </div>
+            </div>
+            <div class="sidebar-down">
+                <div>
+        
+                </div>
+            </div>    
+        </div>
+        
+
+        <div class="show2">
+            <div class="sidebar-up">
+                <div class="search-start">
+                    <input type="text">
+                </div>
+                <div class="search-buttons">
+                    <button class="reset">다시</button>
+                    <button class="search">검색</button>
+                </div>
+            </div>
+            <div class="sidebar-down">
+                <div>
+        
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main">
+
+    </div>
+    
+    <!-- <iframe class='iframe' style="display:block; width:30%; height: 100vh" src ="{% url 'side1'%}"></iframe> -->
+    <object type="text/html"  style="display:block; width:30%; height: 100vh" data="{% url 'side1'%}">
 </body>
 
 </html>
