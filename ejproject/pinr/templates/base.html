@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Page Title</title>
+    <meta charset = "UTF-8">
+    <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+</head>
+<style>
+
+    html, body {
+        height: 100%;
+        width: 100%;
+    }
+    .sidebar{
+        height: 100%;
+        width: 300px;
+        float: left;
+        border: solid black 1px;
+    }
+    .main{
+        height: 100%;
+        float:left;
+        border: solid black 1px;
+    }
+    .sidebar-up {
+        height: 30%;
+        display: grid;
+        grid-template-rows: repeat(3, 1fr);
+    }
+    
+    .sidebar-up div {
+        margin: 1em;
+    }
+    
+    .sidebar-up div input {
+        height: 100%;
+        width: 100%;
+    }
+    
+    .sidebar-up .reset {
+        height: 100%;
+    }
+    
+    .sidebar-up .search{
+        height: 100%;
+        float: right;
+    }
+    
+    .sidebar-down {
+        height: 70%;
+    }
+    
+    .sidebar-down div{
+        height: 100%;
+        margin: 1em;
+        border: solid black 1px;
+    }
+</style>
+
+<body>
+        <button class='btn1' onclick = "location.href=`{% url 'find_route'%}`">길찾기</button>
+        <button class='btn2' onclick = "location.href=`{% url 'find_place'%}`">장소검색</button>
+    
+        {% block content %} {% endblock %} 
+    
+</body>
+
+</html>
