@@ -1,20 +1,40 @@
 {% extends 'base.html' %} {% block content %}
-<div class="sidebar">
-    <div class="show2">
-        <div class="sidebar-up">
-            <div class="search-start">
-                <input type="text">
-            </div>
-            <div class="search-buttons">
-                <button class="reset">다시</button>
-                <button class="search">검색</button>
-            </div>
-        </div>
-        <div class="sidebar-down">
-            <div>
 
-            </div>
-        </div>
+<form>
+    <div class="form-group">
+        <input class="form-control form-control-lg" type="text" placeholder="장소">
     </div>
+    <div class="form-group">
+        <button type="reset" class="btn btn-primary mb-2">Reset</button>
+        <button type="submit" class="btn btn-primary mb-2">Search</button>
+    </div>
+</form>
+<div class="list-group">
+    <a href="#" class="list-group-item list-group-item-action active">
+        <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">List group item heading</h5>
+        <small>3 days ago</small>
+        </div>
+        <p class="mb-1">,.</p>
+        <small>Donec id elit non mi porta.</small>
+    </a>
+    <a href="#" class="list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">List group item heading</h5>
+        <small class="text-muted">3 days ago</small>
+        </div>
+        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+        <small class="text-muted">Donec id elit non mi porta.</small>
+    </a>
+    <a href="#" class="list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">List group item heading</h5>
+        <small class="text-muted">3 days ago</small>
+        </div>
+        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+        <small class="text-muted">Donec id elit non mi porta.</small>
+    </a>
+
 </div>
+
 {% endblock %}

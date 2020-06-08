@@ -21,77 +21,51 @@
         height: 100%;
         width: 100%;
     }
-    .sidebar{
-        height: 100%;
-        width: 300px;
-        float: left;
-        border: solid black 1px;
-    }
-    .main{
-        height: 100%;
-        float:left;
-        border: solid black 1px;
-    }
-    .sidebar-up {
-        height: 30%;
-        display: grid;
-        grid-template-rows: repeat(3, 1fr);
-    }
-    
-    .sidebar-up div {
-        margin: 1em;
-    }
-    
-    .sidebar-up div input {
-        height: 100%;
-        width: 100%;
-    }
-    
-    .sidebar-up .reset {
-        height: 100%;
-    }
-    
-    .sidebar-up .search{
-        height: 100%;
-        float: right;
-    }
-    
-    .sidebar-down {
-        height: 70%;
-    }
-    
-    .sidebar-down div{
-        height: 100%;
-        margin: 1em;
-        border: solid black 1px;
-    }
+
 </style>
 <body>
+        <div class="container-fluid">
+            <div class="row">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                    <a class="nav-link active" href='/'>home</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'find_route'%}">route</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{%url 'find_place'%}">place</a>
+                    </li>
+                </ul>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-3"> 
+                    {% block content %} {% endblock %} 
+                </div>
+                <div class="col">
+                    <script>
+                        function searchPubTransPathAJAX() {
+                            var xhr = new XMLHttpRequest();
+                            var url = "https://api.odsay.com/v1/api/searchPubTransPath?SX=126.9027279&SY=37.5349277&EX=126.9145430&EY=37.5499421&apiKey=Z1tI1PHDPV7ueYpK4TUU2A";
+                            xhr.open("GET", url, true);
+                            xhr.send();
+                            xhr.onreadystatechange = function() {
+                        
+                                if (xhr.readyState == 4 && xhr.status == 200) {
+                                    console.log( xhr.responseText ); // <- xhr.responseText 로 결과를 가져올 수 있음
+                                }
+                            }
+            
+                        }
+                        
+                        searchPubTransPathAJAX()
+                    </script>
+                </div>
+            </div>
+        </div>
     
-        <button class='btn1' onclick = "location.href=`{% url 'find_route'%}`">길찾기</button>
-        <button class='btn2' onclick = "location.href=`{% url 'find_place'%}`">장소검색</button>
-        <div id="map" style="width:100%;height:400px;"></div>
-
-        {% block content %} {% endblock %} 
-    
-
-        <script>
-            function searchPubTransPathAJAX() {
-            var xhr = new XMLHttpRequest();
-            var url = "https://api.odsay.com/v1/api/searchPubTransPath?SX=126.9027279&SY=37.5349277&EX=126.9145430&EY=37.5499421&apiKey=Z1tI1PHDPV7ueYpK4TUU2A";
-            xhr.open("GET", url, true);
-            xhr.send();
-            xhr.onreadystatechange = function() {
         
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    console.log( xhr.responseText ); // <- xhr.responseText 로 결과를 가져올 수 있음
-                }
-            }
-
-        }
-        
-        searchPubTransPathAJAX()
-        </script>
 </body>
 
 </html>
