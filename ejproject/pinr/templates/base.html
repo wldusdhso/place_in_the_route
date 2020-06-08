@@ -106,22 +106,20 @@
                 if (xhr.readyState == 4 && xhr.status == 200) {
                 console.log( xhr.responseText ); // <- xhr.responseText 로 결과를 가져올 수 있음
                 //노선그래픽 데이터 호출
-                //callMapObjApiAJAX((JSON.parse(xhr.responseText))["result"]["path"][0].info.mapObj);
+                callMapObjApiAJAX((JSON.parse(xhr.responseText))["result"]["path"][0].info.mapObj);
                 }
             }
         }
 
-        searchPubTransPathAJAX();
-
-        </script>
-        <!--
+        
+        
         //길찾기 API 호출
         searchPubTransPathAJAX();
         
         function callMapObjApiAJAX(mabObj){
             var xhr = new XMLHttpRequest();
             //ODsay apiKey 입력
-            var url = "https://api.odsay.com/v1/api/loadLane?mapObject=0:0@"+mabObj+"&apiKey=ZQSLaxreUIqWxGXCdAuvnL7+6Jx885ghsJKsclN5pzM";
+            var url = "https://api.odsay.com/v1/api/loadLane?mapObject=0:0@"+mabObj+"&apiKey=Z1tI1PHDPV7ueYpK4TUU2A";
             xhr.open("GET", url, true);
             xhr.send();
             xhr.onreadystatechange = function() {
@@ -189,7 +187,7 @@
         }
 
     </script>
--->
+
     <button class='btn1' onclick = "location.href=`{% url 'find_route'%}`">길찾기</button>
     <button class='btn2' onclick = "location.href=`{% url 'find_place'%}`">장소검색</button>
     
