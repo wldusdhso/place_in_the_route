@@ -1,4 +1,3 @@
-{% load static %}
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -80,16 +79,16 @@
 <body>
     <div id="map" style="width:100%;height:100%;"></div>
 
-    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=42j7j6q1n4"></script>
+    <script type="text/javascript" src="https://openapi.map.kakao.com/openapi/v3/maps.js?ncpClientId=b50b1a428382d60cfb98a67767963d69"></script>
 
     <script>
     
         var mapOptions = {
-            center: new naver.maps.LatLng(37.3595704, 127.105399),
+            center: new kakao.maps.LatLng(37.3595704, 127.105399),
             zoom: 10
         };
 
-        var map = new naver.maps.Map('map', mapOptions);
+        var map = new kakao.maps.Map('map', mapOptions);
         
         var sx = 126.93737555322481;
         var sy = 37.55525165729346;
@@ -125,14 +124,14 @@
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     var resultJsonData = JSON.parse(xhr.responseText);
-                    drawNaverMarker(sx,sy);					// 출발지 마커 표시
-                    drawNaverMarker(ex,ey);					// 도착지 마커 표시
-                    drawNaverPolyLine(resultJsonData);		// 노선그래픽데이터 지도위 표시
+                    drawKakaoMarker(sx,sy);					// 출발지 마커 표시
+                    drawKakaoMarker(ex,ey);					// 도착지 마커 표시
+                    drawKakaoPolyLine(resultJsonData);		// 노선그래픽데이터 지도위 표시
                     // boundary 데이터가 있을경우, 해당 boundary로 지도이동
                     if(resultJsonData.result.boundary){
-                            var boundary = new naver.maps.LatLngBounds(
-                                    new naver.maps.LatLng(resultJsonData.result.boundary.top, resultJsonData.result.boundary.left),
-                                    new naver.maps.LatLng(resultJsonData.result.boundary.bottom, resultJsonData.result.boundary.right)
+                            var boundary = new kakao.maps.LatLngBounds(
+                                    new kakao.maps.LatLng(resultJsonData.result.boundary.top, resultJsonData.result.boundary.left),
+                                    new kakao.maps.LatLng(resultJsonData.result.boundary.bottom, resultJsonData.result.boundary.right)
                                     );
                             map.panToBounds(boundary);
                     }
@@ -141,15 +140,15 @@
         }
         
         // 지도위 마커 표시해주는 함수
-        function drawNaverMarker(x,y){
-            var marker = new naver.maps.Marker({
-                position: new naver.maps.LatLng(y, x),
+        function drawKakaoMarker(x,y){
+            var marker = new kakao.maps.Marker({
+                position: new kakao.maps.LatLng(y, x),
                 map: map
             });
         }
         
         // 노선그래픽 데이터를 이용하여 지도위 폴리라인 그려주는 함수
-        function drawNaverPolyLine(data){
+        function drawKakaoPolyLine(data){
             var lineArray;
             
             for(var i = 0 ; i < data.result.lane.length; i++){
@@ -157,26 +156,26 @@
                     lineArray = null;
                     lineArray = new Array();
                     for(var k=0 ; k < data.result.lane[i].section[j].graphPos.length; k++){
-                        lineArray.push(new naver.maps.LatLng(data.result.lane[i].section[j].graphPos[k].y, data.result.lane[i].section[j].graphPos[k].x));
+                        lineArray.push(new kakao.maps.LatLng(data.result.lane[i].section[j].graphPos[k].y, data.result.lane[i].section[j].graphPos[k].x));
                     }
                     
                 //지하철결과의 경우 노선에 따른 라인색상 지정하는 부분 (1,2호선의 경우만 예로 들음)
                     if(data.result.lane[i].type == 1){
-                        var polyline = new naver.maps.Polyline({
+                        var polyline = new kakao.maps.Polyline({
                             map: map,
                             path: lineArray,
                             strokeWeight: 3,
                             strokeColor: '#003499'
                         });
                     }else if(data.result.lane[i].type == 2){
-                        var polyline = new naver.maps.Polyline({
+                        var polyline = new kakao.maps.Polyline({
                             map: map,
                             path: lineArray,
                             strokeWeight: 3,
                             strokeColor: '#37b42d'
                         });
                     }else{
-                        var polyline = new naver.maps.Polyline({
+                        var polyline = new kakao.maps.Polyline({
                             map: map,
                             path: lineArray,
                             strokeWeight: 3
