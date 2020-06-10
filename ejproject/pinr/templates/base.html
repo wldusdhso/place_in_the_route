@@ -89,18 +89,7 @@
 
         // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
         var map = new kakao.maps.Map(mapContainer, mapOption); 
-    </script>
 
-    <!--
-    <script>
-    
-    
-        var mapOptions = {
-            center: new kakao.maps.LatLng(37.3595704, 127.105399),
-            zoom: 10
-        };
-
-        var map = new kakao.maps.Map('map', mapOptions);
         
         var sx = 126.93737555322481;
         var sy = 37.55525165729346;
@@ -196,7 +185,7 @@
                 }
             }
         }
-    </script> -->
+    </script> 
 
     <button class='btn1' onclick = "location.href=`{% url 'find_route'%}`">길찾기</button>
     <button class='btn2' onclick = "location.href=`{% url 'find_place'%}`">장소검색</button>
