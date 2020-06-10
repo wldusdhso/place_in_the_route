@@ -79,9 +79,22 @@
 <body>
     <div id="map" style="width:100%;height:100%;"></div>
 
-    <script type="text/javascript" src="https://openapi.map.kakao.com/openapi/v3/maps.js?ncpClientId=b50b1a428382d60cfb98a67767963d69"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b50b1a428382d60cfb98a67767963d69"></script>
 
     <script>
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+            mapOption = { 
+                center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };
+        
+        // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+        var map = new kakao.maps.Map(mapContainer, mapOption); 
+    </script>
+
+    <!--
+    <script>
+    
     
         var mapOptions = {
             center: new kakao.maps.LatLng(37.3595704, 127.105399),
@@ -184,8 +197,7 @@
                 }
             }
         }
-
-    </script>
+    </script> -->
 
     <button class='btn1' onclick = "location.href=`{% url 'find_route'%}`">길찾기</button>
     <button class='btn2' onclick = "location.href=`{% url 'find_place'%}`">장소검색</button>
