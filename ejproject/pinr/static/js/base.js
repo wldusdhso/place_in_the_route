@@ -330,6 +330,55 @@ function drawKakaoPolyLine(data) {
                     strokeWeight: 3,
                     strokeColor: '#37b42d'
                 });
+             else if (data.result.lane[i].type == 3) {
+                var polyline = new kakao.maps.Polyline({
+                    map: map,
+                    path: lineArray,
+                    strokeWeight: 3,
+                    strokeColor: '#E9945A'
+                });
+             else if (data.result.lane[i].type == 4) {
+                var polyline = new kakao.maps.Polyline({
+                    map: map,
+                    path: lineArray,
+                    strokeWeight: 3,
+                    strokeColor: '#3165A8'
+                });
+             else if (data.result.lane[i].type == 5) {
+                var polyline = new kakao.maps.Polyline({
+                    map: map,
+                    path: lineArray,
+                    strokeWeight: 3,
+                    strokeColor: '#703E8C'
+                });
+             else if (data.result.lane[i].type == 6) {
+                var polyline = new kakao.maps.Polyline({
+                    map: map,
+                    path: lineArray,
+                    strokeWeight: 3,
+                    strokeColor: '#904D23'
+                });
+             else if (data.result.lane[i].type == 7) {
+                var polyline = new kakao.maps.Polyline({
+                    map: map,
+                    path: lineArray,
+                    strokeWeight: 3,
+                    strokeColor: '#5B692E'
+                });
+             else if (data.result.lane[i].type == 8) {
+                var polyline = new kakao.maps.Polyline({
+                    map: map,
+                    path: lineArray,
+                    strokeWeight: 3,
+                    strokeColor: '#C82363'
+                });
+             else if (data.result.lane[i].type == 9) {
+                var polyline = new kakao.maps.Polyline({
+                    map: map,
+                    path: lineArray,
+                    strokeWeight: 3,
+                    strokeColor: '#B39627'
+                });
             } else {
                 var polyline = new kakao.maps.Polyline({
                     map: map,
