@@ -2,15 +2,15 @@
 
 <div class="col-3"> 
     <br>
-    <form>
+    <div>
         <div class="form-group">
             <form onsubmit="searchPlaces_start(); return false;" id="start">
-            <input class="form-control form-control-lg" type="text" id="keyword" placeholder="출발지">
+            <input class="form-control form-control-lg" type="text" id="keyword_start" placeholder="출발지">
             </form>
         </div>
         <div class="form-group">
             <form onsubmit="searchPlaces_end(); return false;" id="end">
-            <input class="form-control form-control-lg" type="text" id="keyword" placeholder="도착지">
+            <input class="form-control form-control-lg" type="text" id="keyword_end" placeholder="도착지">
             </form>
         </div>
         <div class="form-group">
@@ -18,9 +18,9 @@
             <button type="submit" class="btn btn-primary mb-2">Search</button>
         </div>
         <hr>
-        <ul id="placeList"></ul>
-        <div id="pagination"></div>
-    </form>
+        <div class="list-group" id="placeList"></div>  
+        <div id="pagination" style="text-align: center; letter-spacing: 10px; font-size: large;"></div> 
+    </div>
 </div>
 
 <div class="col">
@@ -64,8 +64,8 @@
 
     // 키워드 검색을 요청하는 함수입니다
     function searchPlaces_start() {
-
-        var keyword = document.getElementById('keyword').value;
+        console.log("방가");
+        var keyword = document.getElementById('keyword_start').value;
 
         if (!keyword.replace(/^\s+|\s+$/g, '')) {
             alert('키워드를 입력해주세요!');
@@ -77,8 +77,8 @@
     }
 
     function searchPlaces_end() {
-
-        var keyword = document.getElementById('keyword').value;
+        console.log("메롱");
+        var keyword = document.getElementById('keyword_end').value;
 
         if (!keyword.replace(/^\s+|\s+$/g, '')) {
             alert('키워드를 입력해주세요!');
@@ -86,7 +86,7 @@
         }
 
         // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
-        ps.keywordSearch( keyword, placesSearchCB); 
+        ps.keywordSearch( keyword, placesSearchCB, {size:6}); 
     }
 
     // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
@@ -116,7 +116,7 @@
     // 검색 결과 목록과 마커를 표출하는 함수입니다
     function displayPlaces(places) {
 
-        var listEl = document.getElementById('placesList'),
+        var listEl = document.getElementById('placeList'),
         fragment = document.createDocumentFragment(),
         bounds = new kakao.maps.LatLngBounds(),
         listStr = '';
@@ -141,9 +141,9 @@
             // 마커와 검색결과 항목에 mouseover 했을때
             // 해당 장소에 인포윈도우에 장소명을 표시합니다
             // mouseout 했을 때는 인포윈도우를 닫습니다
-            (function(marker, title) {
+            (function(marker, place) {
                 kakao.maps.event.addListener(marker, 'mouseover', function() {
-                    displayInfowindow(marker, title);
+                    displayInfowindow(marker, place.place_name);
                 });
 
                 kakao.maps.event.addListener(marker, 'mouseout', function() {
@@ -151,13 +151,15 @@
                 });
 
                 itemEl.onmouseover =  function () {
-                    displayInfowindow(marker, title);
+                    var position = new kakao.maps.LatLng(place.y, place.x);
+                    displayInfowindow(marker, place.place_name);
+                    map.panTo(position);
                 };
 
                 itemEl.onmouseout =  function () {
                     infowindow.close();
                 };
-            })(marker, places[i].place_name);
+            })(marker, places[i]);
 
             fragment.appendChild(itemEl);
         }
