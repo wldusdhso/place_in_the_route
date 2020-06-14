@@ -1,104 +1,79 @@
+{% load static %}
 <!DOCTYPE HTML>
 <html>
 <head>
     <title>Page Title</title>
     <meta charset = "UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+  
     <!-- bootstrap -->
     <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <script>
 
-    </script>
+    <!-- kakaomap -->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b50b1a428382d60cfb98a67767963d69&libraries=services"></script>
+
 </head>
+
 <style>
 
     html, body {
         height: 100%;
         width: 100%;
     }
-    .sidebar{
-        height: 100%;
-        width: 300px;
-        float: left;
-        border: solid black 1px;
-    }
-    .main{
-        height: 100%;
-        float:left;
-        border: solid black 1px;
-    }
-    .sidebar-up {
-        height: 30%;
-        display: grid;
-        grid-template-rows: repeat(3, 1fr);
-    }
-    
-    .sidebar-up div {
-        margin: 1em;
-    }
-    
-    .sidebar-up div input {
-        height: 100%;
-        width: 100%;
-    }
-    
-    .sidebar-up .reset {
-        height: 100%;
-    }
-    
-    .sidebar-up .search{
-        height: 100%;
-        float: right;
-    }
-    
-    .sidebar-down {
-        height: 70%;
-    }
-    
-    .sidebar-down div{
-        height: 100%;
-        margin: 1em;
-        border: solid black 1px;
-    }
-
-    .box {
-	width: 400px;
-	height: AUTO;
-	border: 1px solid green;
-	border-radius: 5px;
-	padding: 15px;
-	margin: 15px;
-	overflow-y: scroll;
-    }
 
 </style>
 <body>
-    <div id="map" style="width:100%;height:100%;"></div>
-
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b50b1a428382d60cfb98a67767963d69"></script>
-    <script>
-        var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-            mapOption = { 
-                center: new kakao.maps.LatLng(37.3595704, 127.105399), // 지도의 중심좌표
-                zoom : 10 // 지도의 확대 레벨
-            };
-
-        // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-        var map = new kakao.maps.Map(mapContainer, mapOption); 
-        
-        
-
-    </script> 
-
-    <button class='btn1' onclick = "location.href=`{% url 'find_route'%}`">길찾기</button>
-    <button class='btn2' onclick = "location.href=`{% url 'find_place'%}`">장소검색</button>
+        <div class="container-fluid" style="height: 100%;">
+            <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                    <a class="nav-link active" href='/'>home</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'find_route'%}">route</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{%url 'find_place'%}" tabindex="-1" aria-disabled="true">place</a>
+                    </li>
+                </ul>
+            <div class="row" style="height: calc(100% - 50px);">
+                {% block content %} 
+                <div class="col">
+                    <div id="map" style="width:100%;height:100%;"></div>
+                </div>
+                {% endblock %} 
+                
+            </div>
+        </div>
     
-    {% block content %} {% endblock %} 
-    
+        <script>
+
+            var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                mapOption = { 
+                    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                    level: 3 // 지도의 확대 레벨
+                };
+            var map = new kakao.maps.Map(mapContainer, mapOption); 
+            
+            if (navigator.geolocation) {
+
+                // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var lat = position.coords.latitude, // 위도
+                        lon = position.coords.longitude; // 경도
+                    var locPosition = new kakao.maps.LatLng(lat, lon); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+                    map.setCenter(locPosition); 
+                });
+            } 
+            
+            
+            // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+            var zoomControl = new kakao.maps.ZoomControl();
+            map.addControl(zoomControl, kakao.maps.ControlPosition.TOPRIGHT);
+</script>
 </body>
 
 </html>

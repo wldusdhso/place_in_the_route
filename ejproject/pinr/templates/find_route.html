@@ -1,29 +1,31 @@
-<div class="menu_wrap">
-    <div class="show1">
-        <div class="sidebar-up">
-            <div class="search-start">
-                <form onsubmit="searchPlaces(); return false;">
-                    출발지 : <input type="text" id="keyword" size="15">
-                </form>
-            </div>
-            <div class="search-end">
-                <form onsubmit="searchPlaces(); return false;">
-                    도착지 : <input type="text" id="keyword" size="15">
-                </form>
-            </div>
-            <div class="search-buttons">
-                <button class="search">길찾기</button>
-            </div>
-            <hr>
-            <ul id="placeList"></ul>
-            <div id="pagination"></div>
-        </div>
-        <div class="sidebar-down">
-            <div>
+{% extends 'base.html' %} {% block content %}
 
-            </div>
-        </div>    
+<div class="col-3"> 
+    <br>
+    <form>
+        <div class="form-group">
+            <form onsubmit="searchPlaces(); return false;">
+            <input class="form-control form-control-lg" type="text" id="keyword" placeholder="출발지">
+            </form>
+        </div>
+        <div class="form-group">
+            <form onsubmit="searchPlaces(); return false;">
+            <input class="form-control form-control-lg" type="text" id="keyword" placeholder="도착지">
+            </form>
+        </div>
+        <div class="form-group">
+            <button type="reset" class="btn btn-primary mb-2">Reset</button>
+            <button type="submit" class="btn btn-primary mb-2">Search</button>
+        </div>
+        <hr>
+        <ul id="placeList"></ul>
+        <div id="pagination"></div>
+    </form>
     </div>
+</div>
+
+<div class="col">
+    <div id="map" style="width:100%;height:100%;"></div>
 </div>
 
 <script>
@@ -341,4 +343,8 @@
         }
     }
 </script>
+
+
+
+
 {% endblock %}
