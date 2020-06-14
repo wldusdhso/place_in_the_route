@@ -1,9 +1,8 @@
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-
     mapOption = {
-    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-    level: 3 // 지도의 확대 레벨
-};
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };
 
 var map = new kakao.maps.Map(mapContainer, mapOption);
 
@@ -32,6 +31,9 @@ var ps = new kakao.maps.services.Places();
 // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
 var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
+var start_or_end = '';
+var sx, sy, ex, ey ;
+
 // 키워드 검색을 요청하는 함수입니다
 function searchPlaces_start() {
     console.log("방가");
@@ -41,6 +43,8 @@ function searchPlaces_start() {
         alert('키워드를 입력해주세요!');
         return false;
     }
+
+    start_or_end = 'start';
 
     // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
     ps.keywordSearch(keyword, placesSearchCB, { size: 6 });
@@ -54,6 +58,8 @@ function searchPlaces_end() {
         alert('키워드를 입력해주세요!');
         return false;
     }
+
+    start_or_end = 'end';
 
     // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
     ps.keywordSearch(keyword, placesSearchCB, { size: 6 });
@@ -128,6 +134,18 @@ function displayPlaces(places) {
 
             itemEl.onmouseout = function () {
                 infowindow.close();
+            };
+
+            itemEl.onclick = function () {
+                if (start_or_end == 'start') {
+                    sx = place.x;
+                    sy = place.y; 
+                    console.log(sx);
+                } else if (start_or_end == 'end') {
+                    ex = place.x;
+                    ey = place.y;
+                    console.log(ex);
+                }
             };
         })(marker, places[i]);
 
