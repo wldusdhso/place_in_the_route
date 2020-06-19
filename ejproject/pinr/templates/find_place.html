@@ -69,6 +69,7 @@
 
         var sx = '{{sx}}', sy = '{{sy}}', ex = '{{ex}}', ey = '{{ey}}', route_id = '{{route_id}}'
         var route_list = new Array();
+        searchPubTransPathAJAX(route_id)
 
         function searchPubTransPathAJAX(id) {
             var xhr = new XMLHttpRequest();
@@ -78,14 +79,12 @@
             xhr.send();
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
-                    console.log(xhr.responseText); // <- xhr.responseText 로 결과를 가져올 수 있음
+                    //console.log(xhr.responseText); // <- xhr.responseText 로 결과를 가져올 수 있음
                     //노선그래픽 데이터 호출
                     callMapObjApiAJAX((JSON.parse(xhr.responseText))["result"]["path"][id].info.mapObj);
                 }
             }
         }
-        
-        searchPubTransPathAJAX(route_id)
        
         function callMapObjApiAJAX(mabObj) {
             var xhr = new XMLHttpRequest();
@@ -151,7 +150,7 @@
         }
 
         function searchPlaces() {
-            console.log("방가");
+            console.log(templist);
             var keyword = document.getElementById('keyword_start').value;
 
             if (!keyword.replace(/^\s+|\s+$/g, '')) {
