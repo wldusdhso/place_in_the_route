@@ -69,7 +69,7 @@
 
         var sx = '{{sx}}', sy = '{{sy}}', ex = '{{ex}}', ey = '{{ey}}', route_id = '{{route_id}}'
         var route_list = []
-        
+
         function searchPubTransPathAJAX(id) {
             var xhr = new XMLHttpRequest();
             //ODsay apiKey 입력
@@ -113,14 +113,14 @@
 
         function drawKakaoPolyLine(data) {
             var lineArray;
-            var templist = [];
+            var templist = new Array();
             for (var i = 0; i < data.result.lane.length; i++) {
                 for (var j = 0; j < data.result.lane[i].section.length; j++) {
                     lineArray = null;
                     lineArray = new Array();
                     for (var k = 0; k < data.result.lane[i].section[j].graphPos.length; k++) {
                         lineArray.push(new kakao.maps.LatLng(data.result.lane[i].section[j].graphPos[k].y, data.result.lane[i].section[j].graphPos[k].x));
-                        templist.append(new kakao.maps.LatLng(data.result.lane[i].section[j].graphPos[k].y, data.result.lane[i].section[j].graphPos[k].x));
+                        templist.push(new kakao.maps.LatLng(data.result.lane[i].section[j].graphPos[k].y, data.result.lane[i].section[j].graphPos[k].x));
                     }
 
                     //지하철결과의 경우 노선에 따른 라인색상 지정하는 부분 (1,2호선의 경우만 예로 들음)
