@@ -265,6 +265,12 @@ function searchPubTransPathAJAX() {
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
             console.log(xhr.responseText); // <- xhr.responseText 로 결과를 가져올 수 있음
+            //지도 위 폴리라인과 마커 지우기
+            removeMarker();
+            var overlays = manager.getOverlays();
+            overlays['polyline'].forEach(function(polyline) {
+                manager.remove(polyline);
+            });
             //노선그래픽 데이터 호출
             callMapObjApiAJAX((JSON.parse(xhr.responseText))["result"]["path"][0].info.mapObj);
         }
