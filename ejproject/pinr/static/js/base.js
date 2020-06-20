@@ -269,15 +269,15 @@ function searchPubTransPathAJAX() {
             //지도 위 폴리라인과 마커 지우기
             removeMarker();
             
-            // overlays['polyline'].forEach(function(polyline) {
-            //     manager.remove(polyline);
-            //     console.log("폴리라인 삭제");
-            // });
-            manager.addListener('drawend', function(map) {
-                // data.target 에 그려진 오버레이 객체가 넘어온다.
-                manager.remove(map.target);
-                console.log("폴라삭");
+            overlays['lineArray'].forEach(function(lineArray) {
+                manager.remove(lineArray);
+                console.log("폴리라인 삭제");
             });
+            // manager.addListener('drawend', function(map) {
+            //     // data.target 에 그려진 오버레이 객체가 넘어온다.
+            //     manager.remove(map.target);
+            //     console.log("폴라삭");
+            // });
             //노선그래픽 데이터 호출
             callMapObjApiAJAX((JSON.parse(xhr.responseText))["result"]["path"][0].info.mapObj);
         }
