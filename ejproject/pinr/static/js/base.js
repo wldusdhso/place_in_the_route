@@ -215,6 +215,7 @@ function removePolyline() {
         lineArray[i].setMap(null);
     }
     lineArray = [];
+    console.log("폴라삭");
 }
 
 // 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
