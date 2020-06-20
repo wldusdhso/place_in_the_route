@@ -265,15 +265,16 @@ function removeAllChildNods(el) {
 }
 
 function searchPubTransPathAJAX() {
-    var xhr = new XMLHttpRequest();
-    //ODsay apiKey 입력
-    var url = "https://api.odsay.com/v1/api/searchPubTransPath?SX=" + sx + "&SY=" + sy + "&EX=" + ex + "&EY=" + ey + "&apiKey=Z1tI1PHDPV7ueYpK4TUU2A";
-    var overlays = manager.getOverlays();
-    xhr.open("GET", url, true);
-    xhr.send();
+
     //지도 위 폴리라인과 마커 지우기
     removeMarker();
     removePolyline();
+
+    var xhr = new XMLHttpRequest();
+    //ODsay apiKey 입력
+    var url = "https://api.odsay.com/v1/api/searchPubTransPath?SX=" + sx + "&SY=" + sy + "&EX=" + ex + "&EY=" + ey + "&apiKey=Z1tI1PHDPV7ueYpK4TUU2A";
+    xhr.open("GET", url, true);
+    xhr.send();
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
             console.log(xhr.responseText); // <- xhr.responseText 로 결과를 가져올 수 있음
