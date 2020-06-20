@@ -209,6 +209,14 @@ function removeMarker() {
     markers = [];
 }
 
+// 지도 위에 표시되고 있는 폴리라인 모두 제거
+function removePolyline() {
+    for (var i = 0; i < lineArray.length; i++) {
+        lineArray[i].setMap(null);
+    }
+    lineArray = [];
+}
+
 // 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
 function displayPagination(pagination) {
     var paginationEl = document.getElementById('pagination'),
@@ -268,17 +276,7 @@ function searchPubTransPathAJAX() {
             console.log(xhr.responseText); // <- xhr.responseText 로 결과를 가져올 수 있음
             //지도 위 폴리라인과 마커 지우기
             removeMarker();
-            
-            overlays['lineArray'].forEach(function(lineArray) {
-                manager.remove(lineArray);
-                console.log("폴리라인 삭제");
-            });
-            // manager.addListener('drawend', function(map) {
-            //     // data.target 에 그려진 오버레이 객체가 넘어온다.
-            //     manager.remove(map.target);
-            //     console.log("폴라삭");
-            // });
-            //노선그래픽 데이터 호출
+            removePolyline();
             callMapObjApiAJAX((JSON.parse(xhr.responseText))["result"]["path"][0].info.mapObj);
         }
     }
