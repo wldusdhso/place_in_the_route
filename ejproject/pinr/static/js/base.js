@@ -270,6 +270,7 @@ function searchPubTransPathAJAX() {
             var overlays = manager.getOverlays();
             overlays['polyline'].forEach(function(polyline) {
                 manager.remove(polyline);
+                console.log("폴리라인 삭제");
             });
             //노선그래픽 데이터 호출
             callMapObjApiAJAX((JSON.parse(xhr.responseText))["result"]["path"][0].info.mapObj);
