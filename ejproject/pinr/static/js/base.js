@@ -51,7 +51,7 @@ function searchPlaces_start() {
 }
 
 function searchPlaces_end() {
-    console.log("메롱");
+    console.log("바이");
     var keyword = document.getElementById('keyword_end').value;
 
     if (!keyword.replace(/^\s+|\s+$/g, '')) {
