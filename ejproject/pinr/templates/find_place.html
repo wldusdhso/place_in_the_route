@@ -114,6 +114,7 @@
             xhr.onreadystatechange = function () {
                 console.log(xhr.readyState, xhr.status)
                 if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log('start')
                     var resultJsonData = JSON.parse(xhr.responseText);
                     drawKakaoMarker(sx, sy);					// 출발지 마커 표시
                     drawKakaoMarker(ex, ey);					// 도착지 마커 표시
