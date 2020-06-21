@@ -187,32 +187,32 @@ function displayRoutes() {
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
             var routes = (JSON.parse(xhr.responseText))["result"]["path"];
-        }
 
-        for (var i = 0; i < routes.length; i++) {
+            for (var i = 0; i < routes.length; i++) {
 
-            var routeSection = new kakao.maps.LatLng()
-            itemEl = getRouteListItem(routes[i]);
+                var routeSection = new kakao.maps.LatLng()
+                itemEl = getRouteListItem(routes[i]);
 
-            (function (route) {
-                itemEl.onmouseover = function () {
-                    callMapObjApiAJAX(route.info.mapObj);
-                };
+                (function (route) {
+                    itemEl.onmouseover = function () {
+                        callMapObjApiAJAX(route.info.mapObj);
+                    };
 
-                itemEl.onclick = function () {
-                    // 데이터 넘겨주기
-                    var listEl = document.getElementById('placeList');
-                    removeAllChildNods(listEl);
+                    itemEl.onclick = function () {
+                        // 데이터 넘겨주기
+                        var listEl = document.getElementById('placeList');
+                        removeAllChildNods(listEl);
 
-                };
-            })(routes[i]);
+                    };
+                })(routes[i]);
 
-            fragment.appendChild(itemEl);
+                fragment.appendChild(itemEl);
 
+            }
+            // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
+            listEl.appendChild(fragment);
         }
     }
-    // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
-    listEl.appendChild(fragment);
 }
 
 // 장소 검색결과 항목을 Element로 반환하는 함수입니다
