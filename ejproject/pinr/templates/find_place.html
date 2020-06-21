@@ -181,17 +181,9 @@
             // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
             for (i=0; i<route_list.length; i++) {
                 for(j=0; j<route_list[i].length; j++){
-                    console.log(route_list[i][j])
-                    ps.keywordSearch(keyword, placesSearchCB, { size: 6, location: route_list[i][j], radius : 500 });
+                   console.log(ps.keywordSearch(keyword, placesSearchCB, { size: 6, location: route_list[i][j], radius : 500 }))
                 }
             }
-
-            // dataArray.extend(ps.keywordSearch(keyword, placesSearchCB, {
-        //                     size: 6, 
-        //                     y : data.result.lane[i].section[j].graphPos[k].y,
-        //                     x : data.result.lane[i].section[j].graphPos[k].x,
-        //                     radius : 5000,
-        //                 }));
         }
 
         function placesSearchCB(data, status, pagination) {
