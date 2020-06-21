@@ -132,6 +132,7 @@
         function drawKakaoPolyLine(data) {
             var lineArray;
             var templist = new Array();
+            console.log('실행');
             for (var i = 0; i < data.result.lane.length; i++) {
                 for (var j = 0; j < data.result.lane[i].section.length; j++) {
                     console.log(data.result.lane[i].section[j]);
