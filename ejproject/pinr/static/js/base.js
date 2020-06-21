@@ -243,7 +243,7 @@ function getRouteListItem(route) {
         itemStr = '<div class="d-flex w-100 justify-content-between">' +
             '   <h5 class="mb-1">' + route.info.totalTime + '분' + '</h5>' + '</div>';
     
-    itemStr += '  <small class="text-muted">' + route.info.payment + '원' + '</small>';
+    itemStr += '  <small class="text-muted">' + route.info.payment + '원' + '</small>' + '<br/>';
     
     var subPathLength = route.subPath.length;
 
