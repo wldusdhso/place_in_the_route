@@ -288,7 +288,7 @@ function addMarker(position, idx, title) {
 }
 
 // 장소 검색 결과로 표시되고 있는 마커를 모두 제거합니다
-function removeMarker() {
+function removeMarker_route() {
     for (var i = 0; i < markers.length; i++) {
         markers[i].setMap(null);
     }
@@ -296,7 +296,7 @@ function removeMarker() {
 }
 
 // 경로의 출발지 도착지 마커를 제거합니다
-function removeMarker_route() {
+function removePolyline() {
     for (var i = 0; i < polylines.length; i++) {
         polylines[i].setMap(null);
     }
