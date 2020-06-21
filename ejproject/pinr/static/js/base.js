@@ -334,8 +334,8 @@ function removeAllChildNods(el) {
 function searchPubTransPathAJAX() {
 
     //지도 위 폴리라인과 마커 지우기
-    removeMarker();
-    removePolyline();
+    // removeMarker();
+    // removePolyline();
 
     var xhr = new XMLHttpRequest();
     //ODsay apiKey 입력
