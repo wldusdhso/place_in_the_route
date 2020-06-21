@@ -248,22 +248,22 @@ function getRouteListItem(route) {
     for (i = 0; i < route.subPath.length; i++) {
         if (route.subPath[i].trafficType == 1) { // 지하철일 때
             itemStr += '   <h5 class="mb-1">' + route.subPath[i].lane[0].subwayCode + '호선 ' ;
-            if (i == 0 && i != route.subPath.length) {
+            if (i == 0 && i != route.subPath.length-1) {
                 itemStr += route.subPath[i].startName + '승차' + '</h5>';
-            } else if (i != 0 && i == route.subPath.length) {
+            } else if (i != 0 && i == route.subPath.length-1) {
                 itemStr += route.subPath[i].startName + '환승 -> ' + route.subPath[i].endName + '하차' + '</h5>';
-            } else if (i == 0 && i == route.subPath.length) {
+            } else if (i == 0 && i == route.subPath.length-1) {
                 itemStr += route.subPath[i].startName + '승차 -> ' + route.subPath[i].endName + '하차' + '</h5>';
             } else {
                 itemStr += route.subPath[i].startName + '환승' + '</h5>';
             }
         } else if (route.subPath[i].trafficType == 2) { // 버스일 때
             itemStr += '   <h5 class="mb-1">' + route.subPath[i].lane[0].busNo + ' ';
-            if (i == 0 && i != route.subPath.length) {
+            if (i == 0 && i != route.subPath.length-1) {
                 itemStr += route.subPath[i].startName + '승차' + '</h5>';
-            } else if (i != 0 && i == route.subPath.length) {
+            } else if (i != 0 && i == route.subPath.length-1) {
                 itemStr += route.subPath[i].startName + '환승 -> ' + route.subPath[i].endName + '하차' + '</h5>';
-            } else if (i == 0 && i == route.subPath.length) {
+            } else if (i == 0 && i == route.subPath.length-1) {
                 itemStr += route.subPath[i].startName + '승차 -> ' + route.subPath[i].endName + '하차' + '</h5>';
             } else {
                 itemStr += route.subPath[i].startName + '환승' + '</h5>';
