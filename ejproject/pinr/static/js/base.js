@@ -398,6 +398,7 @@ function drawKakaoMarker(x, y) {
         position: new kakao.maps.LatLng(y, x),
         map: map
     });
+    markers.push(marker);
 }
 
 // 노선그래픽 데이터를 이용하여 지도위 폴리라인 그려주는 함수
