@@ -6,24 +6,6 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 
 var map = new kakao.maps.Map(mapContainer, mapOption);
 
-var manager = new kakao.maps.drawing.DrawingManager({
-    map: map,
-    drawingMode: [
-        kakao.maps.drawing.OverlayType.POLYLINE
-    ],
-    polylineOptions: {
-        draggable: true,
-        removable: true,
-        editable: true,
-        // strokeWeight: 3,
-        // strokeOpacity: 0.8,
-        // strokeColor: '#00ff00',
-        // strokeStyle: 'solid',
-        // hintStrokeStyle: 'dashdot',
-        // hintStrokeOpacity: 0.3
-    }
-});
-
 if (navigator.geolocation) {
 
     // GeoLocation을 이용해서 접속 위치를 얻어옵니다
@@ -190,20 +172,17 @@ function displayPlaces(places) {
 }
 
 // 경로 검색 결과 목록 표출하는 함수
-// function displayRoutes(routes) {
+ function displayRoutes() {
 
-//     var listEl = document.getElementById('placeList'),
+     var listEl = document.getElementById('placeList');
 //         fragment = document.createDocumentFragment(),
 //         bounds = new kakao.maps.LatLngBounds();
 //         xhr = new XMLHttpRequest(),
 //         url = "https://api.odsay.com/v1/api/searchPubTransPath?SX=" + sx + "&SY=" + sy + "&EX=" + ex + "&EY=" + ey + "&apiKey=Z1tI1PHDPV7ueYpK4TUU2A";
     
     
-//     // 검색 결과 목록에 추가된 항목들 제거
-//     removeAllChildNods(listEl);
-
-//     // 지도에 표시되고 있는 마커를 제거
-//     removeMarker();
+    // 검색 결과 목록에 추가된 항목들 제거
+    removeAllChildNods(listEl);
 
 //     xhr.open("GET", url, true);
 //     xhr.send();
@@ -236,7 +215,7 @@ function displayPlaces(places) {
 
 //     // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
 //     listEl.appendChild(fragment);
-// }
+ }
 
 // 장소 검색결과 항목을 Element로 반환하는 함수입니다
 function getPlaceListItem(index, places) {
@@ -313,21 +292,13 @@ function removeMarker_route() {
     markers_route = [];
 }
 
+// 지도 위 폴리라인 모두 제거
 function removePolyline() {
     for (var i = 0; i < polylines.length; i++) {
         polylines[i].setMap(null);
     }
     polylines = [];
 }
-
-// 지도 위에 표시되고 있는 폴리라인 모두 제거
-// function removePolyline() {
-//     var overlays = manager.getOverlays();
-//     overlays['polyline'].forEach(function(polyline) {
-//         manager.remove(polyline);
-//     });
-//     console.log("폴라삭");
-// }
 
 // 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
 function displayPagination(pagination) {
@@ -377,6 +348,11 @@ function removeAllChildNods(el) {
 }
 
 function searchPubTransPathAJAX() {
+    // 지도 위 마커 제거
+    removeMarker();
+    // 경로 리스트 표출
+    displayRoutes();
+
     var xhr = new XMLHttpRequest();
     //ODsay apiKey 입력
     var url = "https://api.odsay.com/v1/api/searchPubTransPath?SX=" + sx + "&SY=" + sy + "&EX=" + ex + "&EY=" + ey + "&apiKey=Z1tI1PHDPV7ueYpK4TUU2A";
