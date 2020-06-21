@@ -244,7 +244,7 @@ function getRouteListItem(route) {
             '   <h5 class="mb-1">' + route.info.totalTime + '분' + '</h5>' + '</div>';
     
     itemStr += '  <small class="text-muted">' + route.info.payment + '원' + '</small>';
-    console.log(subPath.length);
+    console.log(route.subPath.length);
     for (i = 0; route.subPath.length; i++) {
         console.log("서브루트");
         if (subPath[i].trafficType == 1) { // 지하철일 때
