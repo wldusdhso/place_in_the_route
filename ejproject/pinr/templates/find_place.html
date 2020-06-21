@@ -134,6 +134,8 @@
             var templist = new Array();
             for (var i = 0; i < data.result.lane.length; i++) {
                 for (var j = 0; j < data.result.lane[i].section.length; j++) {
+                    console.log(data.result.lane[i].section[j]);
+
                     lineArray = null;
                     lineArray = new Array();
                     for (var k = 0; k < data.result.lane[i].section[j].graphPos.length; k++) {
@@ -178,7 +180,19 @@
             }
 
             // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
+            
             ps.keywordSearch(keyword, placesSearchCB, { size: 6 });
+
+            // for (i=0; i<route_list.length; i++) {
+            //     ps.keywordSearch(keyword, placesSearchCB, { size: 6, radius : 500 });
+            // }
+
+            // dataArray.extend(ps.keywordSearch(keyword, placesSearchCB, {
+        //                     size: 6, 
+        //                     y : data.result.lane[i].section[j].graphPos[k].y,
+        //                     x : data.result.lane[i].section[j].graphPos[k].x,
+        //                     radius : 5000,
+        //                 }));
         }
 
         function placesSearchCB(data, status, pagination) {
@@ -404,12 +418,7 @@
                 }
             }
         }
-        // dataArray.extend(ps.keywordSearch(keyword, placesSearchCB, {
-        //                     size: 6, 
-        //                     y : data.result.lane[i].section[j].graphPos[k].y,
-        //                     x : data.result.lane[i].section[j].graphPos[k].x,
-        //                     radius : 5000,
-        //                 }));
+        
     </script>
 </body>
 
