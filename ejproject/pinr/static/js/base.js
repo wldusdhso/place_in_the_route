@@ -277,10 +277,10 @@ function removeMarker() {
 
 // 지도 위에 표시되고 있는 폴리라인 모두 제거
 function removePolyline() {
-    for (var i = 0; i < lineArray.length; i++) {
-        lineArray[i].setMap(null);
-    }
-    lineArray = [];
+    var overlays = manager.getOverlays();
+    overlays['polyline'].forEach(function(polyline) {
+        manager.remove(polyline); 
+    });
     console.log("폴라삭");
 }
 
