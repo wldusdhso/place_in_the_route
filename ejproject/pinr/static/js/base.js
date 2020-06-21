@@ -42,6 +42,8 @@ map.addControl(zoomControl, kakao.maps.ControlPosition.TOPRIGHT);
 
 // 마커를 담을 배열입니다
 var markers = [];
+var markers_route = [];
+var polylines =[];
 
 // 장소 검색 객체를 생성합니다
 var ps = new kakao.maps.services.Places();
@@ -285,13 +287,23 @@ function addMarker(position, idx, title) {
     return marker;
 }
 
-// 지도 위에 표시되고 있는 마커를 모두 제거합니다
+// 장소 검색 결과로 표시되고 있는 마커를 모두 제거합니다
 function removeMarker() {
     for (var i = 0; i < markers.length; i++) {
         markers[i].setMap(null);
     }
     markers = [];
 }
+
+// 경로의 출발지 도착지 마커를 제거합니다
+function removeMarker_route() {
+    for (var i = 0; i < polylines.length; i++) {
+        polylines[i].setMap(null);
+    }
+    polylines = [];
+}
+
+
 
 // 지도 위에 표시되고 있는 폴리라인 모두 제거
 function removePolyline() {
@@ -352,7 +364,7 @@ function removeAllChildNods(el) {
 function searchPubTransPathAJAX() {
 
     //지도 위 폴리라인과 마커 지우기
-    removeMarker();
+    removeMarker_route();
     removePolyline();
 
     var xhr = new XMLHttpRequest();
@@ -398,7 +410,7 @@ function drawKakaoMarker(x, y) {
         position: new kakao.maps.LatLng(y, x),
         map: map
     });
-    markers.push(marker);
+    markers_route.push(marker);
 }
 
 // 노선그래픽 데이터를 이용하여 지도위 폴리라인 그려주는 함수
@@ -483,7 +495,7 @@ function drawKakaoPolyLine(data) {
                     path: lineArray,
                     strokeWeight: 3
                 });
-            }
+            } polylines.push(polyline);
         }
     }
 }
