@@ -57,6 +57,11 @@ var sx, sy, ex, ey ;
 // 키워드 검색을 요청하는 함수입니다
 function searchPlaces_start() {
     console.log("방가");
+
+    //지도 위 폴리라인과 마커 지우기
+    removeMarker_route();
+    removePolyline();
+
     var keyword = document.getElementById('keyword_start').value;
 
     if (!keyword.replace(/^\s+|\s+$/g, '')) {
@@ -72,6 +77,11 @@ function searchPlaces_start() {
 
 function searchPlaces_end() {
     console.log("바이");
+
+    //지도 위 폴리라인과 마커 지우기
+    removeMarker_route();
+    removePolyline();
+
     var keyword = document.getElementById('keyword_end').value;
 
     if (!keyword.replace(/^\s+|\s+$/g, '')) {
@@ -288,7 +298,7 @@ function addMarker(position, idx, title) {
 }
 
 // 장소 검색 결과로 표시되고 있는 마커를 모두 제거합니다
-function removeMarker_route() {
+function removeMarker() {
     for (var i = 0; i < markers.length; i++) {
         markers[i].setMap(null);
     }
@@ -296,6 +306,13 @@ function removeMarker_route() {
 }
 
 // 경로의 출발지 도착지 마커를 제거합니다
+function removeMarker_route() {
+    for (var i = 0; i < markers_route.length; i++) {
+        markers_route[i].setMap(null);
+    }
+    markers_route = [];
+}
+
 function removePolyline() {
     for (var i = 0; i < polylines.length; i++) {
         polylines[i].setMap(null);
@@ -303,16 +320,14 @@ function removePolyline() {
     polylines = [];
 }
 
-
-
 // 지도 위에 표시되고 있는 폴리라인 모두 제거
-function removePolyline() {
-    var overlays = manager.getOverlays();
-    overlays['polyline'].forEach(function(polyline) {
-        manager.remove(polyline);
-    });
-    console.log("폴라삭");
-}
+// function removePolyline() {
+//     var overlays = manager.getOverlays();
+//     overlays['polyline'].forEach(function(polyline) {
+//         manager.remove(polyline);
+//     });
+//     console.log("폴라삭");
+// }
 
 // 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
 function displayPagination(pagination) {
@@ -362,11 +377,6 @@ function removeAllChildNods(el) {
 }
 
 function searchPubTransPathAJAX() {
-
-    //지도 위 폴리라인과 마커 지우기
-    removeMarker_route();
-    removePolyline();
-
     var xhr = new XMLHttpRequest();
     //ODsay apiKey 입력
     var url = "https://api.odsay.com/v1/api/searchPubTransPath?SX=" + sx + "&SY=" + sy + "&EX=" + ex + "&EY=" + ey + "&apiKey=Z1tI1PHDPV7ueYpK4TUU2A";
