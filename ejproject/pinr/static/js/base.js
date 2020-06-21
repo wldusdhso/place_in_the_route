@@ -243,31 +243,31 @@ function getRouteListItem(route) {
         itemStr = '<div class="d-flex w-100 justify-content-between">' +
             '   <h5 class="mb-1">' + route.info.totalTime + '분' + '</h5>' + '</div>';
     itemStr += '  <small class="text-muted">' + route.info.payment + '원' + '</small>';
-    // for (i = 0; subPath.legnth(); i++) {
-    //     if (subPath[i].trafficType == 1) {
-    //         itemStr += '   <h5 class="mb-1">' + subPath[i].lane[].subwayCode + '호선 ' ;
-    //         if (i == 0 && i != subPath.length()) {
-    //             itemStr += subPath[i].startName + '승차' + '</h5>';
-    //         } else if (i != 0 && i == subPath.length()) {
-    //             itemStr += subPath[i].startName + '환승 -> ' + subPath[i].endName + '하차' + '</h5>';
-    //         } else if (i == 0 && i == subPath.length()) {
-    //             itemStr += subPath[i].startName + '승차 -> ' + subPath[i].endName + '하차' + '</h5>';
-    //         } else {
-    //             itemStr += subPath[i].startName + '환승' + '</h5>';
-    //         }
-    //     } else if (subPath[i].trafficType == 2) {
-    //         itemStr += '   <h5 class="mb-1">' + subPath[i].lane[].busNo;
-    //         if (i == 0 && i != subPath.length()) {
-    //             itemStr += subPath[i].startName + '승차' + '</h5>';
-    //         } else if (i != 0 && i == subPath.length()) {
-    //             itemStr += subPath[i].startName + '환승 -> ' + subPath[i].endName + '하차' + '</h5>';
-    //         } else if (i == 0 && i == subPath.length()) {
-    //             itemStr += subPath[i].startName + '승차 -> ' + subPath[i].endName + '하차' + '</h5>';
-    //         } else {
-    //             itemStr += subPath[i].startName + '환승' + '</h5>';
-    //         }
-    //     }
-    //}
+    for (i = 0; route.subPath.legnth(); i++) {
+        if (subPath[i].trafficType == 1) { // 지하철일 때
+            itemStr += '   <h5 class="mb-1">' + subPath[i].lane[0].subwayCode + '호선 ' ;
+            if (i == 0 && i != subPath.length()) {
+                itemStr += subPath[i].startName + '승차' + '</h5>';
+            } else if (i != 0 && i == subPath.length()) {
+                itemStr += subPath[i].startName + '환승 -> ' + subPath[i].endName + '하차' + '</h5>';
+            } else if (i == 0 && i == subPath.length()) {
+                itemStr += subPath[i].startName + '승차 -> ' + subPath[i].endName + '하차' + '</h5>';
+            } else {
+                itemStr += subPath[i].startName + '환승' + '</h5>';
+            }
+        } else if (subPath[i].trafficType == 2) { // 버스일 때
+            itemStr += '   <h5 class="mb-1">' + subPath[i].lane[0].busNo;
+            if (i == 0 && i != subPath.length()) {
+                itemStr += subPath[i].startName + '승차' + '</h5>';
+            } else if (i != 0 && i == subPath.length()) {
+                itemStr += subPath[i].startName + '환승 -> ' + subPath[i].endName + '하차' + '</h5>';
+            } else if (i == 0 && i == subPath.length()) {
+                itemStr += subPath[i].startName + '승차 -> ' + subPath[i].endName + '하차' + '</h5>';
+            } else {
+                itemStr += subPath[i].startName + '환승' + '</h5>';
+            }
+        }
+    }
 
     el.innerHTML = itemStr;
     el.className = 'list-group-item list-group-item-action';
