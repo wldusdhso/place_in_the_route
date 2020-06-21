@@ -6,15 +6,23 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 
 var map = new kakao.maps.Map(mapContainer, mapOption);
 
-var options = {
-    map: map, // drawing manager로 그리기 요소를 그릴 map 객체 
-    drawingMode: [ // drawing manager로 제공할 그리기 요소 모드
+var manager = new kakao.maps.drawing.DrawingManager({
+    map: map,
+    drawingMode: [
         kakao.maps.drawing.OverlayType.POLYLINE
     ],
-    guideTooltip: ['draw', 'drag', 'edit']
-};
-
-var manager = new kakao.maps.drawing.DrawingManager(options);
+    polylineOptions: {
+        draggable: true,
+        removable: true,
+        editable: true,
+        // strokeWeight: 3,
+        // strokeOpacity: 0.8,
+        // strokeColor: '#00ff00',
+        // strokeStyle: 'solid',
+        // hintStrokeStyle: 'dashdot',
+        // hintStrokeOpacity: 0.3
+    }
+});
 
 if (navigator.geolocation) {
 
