@@ -108,7 +108,7 @@ function displayPlaces(places) {
         // 마커를 생성하고 지도에 표시합니다
         var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
             marker = addMarker(placePosition, i),
-            itemEl = getListPlcaeItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
+            itemEl = getPlaceListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         // LatLngBounds 객체에 좌표를 추가합니다
@@ -185,7 +185,7 @@ function displayPlaces(places) {
 //     for (var i = 0 ; i < routes.length ; i++) {
 
 //         var routeSection = new kakao.maps.LatLng()
-//             itemEl = getListRouteItem(i, routes[i]);
+//             itemEl = getRouteListItem(i, routes[i]);
 
 //         (function (route) {
 //             itemEl.onmouseover = function () {
@@ -209,7 +209,7 @@ function displayPlaces(places) {
 // }
 
 // 장소 검색결과 항목을 Element로 반환하는 함수입니다
-function getListPlaceItem(index, places) {
+function getPlaceListItem(index, places) {
 
     var el = document.createElement('a'),
         itemStr = '<div class="d-flex w-100 justify-content-between">' +
@@ -230,7 +230,7 @@ function getListPlaceItem(index, places) {
 }
 
 // 경로 검색결과 항목을 Element로 반환하는 함수입니다
-// function getListRouteItem(index, route) {
+// function getRouteListItem(index, route) {
 
 //     var el = document.createElement('a'),
 //         itemStr = '<div class="d-flex w-100 justify-content-between">' +
