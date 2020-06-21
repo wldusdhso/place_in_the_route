@@ -333,10 +333,6 @@ function removeAllChildNods(el) {
 
 function searchPubTransPathAJAX() {
 
-    //지도 위 폴리라인과 마커 지우기
-    removeMarker();
-    removePolyline();
-
     var xhr = new XMLHttpRequest();
     //ODsay apiKey 입력
     var url = "https://api.odsay.com/v1/api/searchPubTransPath?SX=" + sx + "&SY=" + sy + "&EX=" + ex + "&EY=" + ey + "&apiKey=Z1tI1PHDPV7ueYpK4TUU2A";
@@ -359,6 +355,9 @@ function callMapObjApiAJAX(mabObj) {
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
             var resultJsonData = JSON.parse(xhr.responseText);
+            //지도 위 폴리라인과 마커 지우기
+            removeMarker();
+            removePolyline();
             drawKakaoMarker(sx, sy);					// 출발지 마커 표시
             drawKakaoMarker(ex, ey);					// 도착지 마커 표시
             drawKakaoPolyLine(resultJsonData);		// 노선그래픽데이터 지도위 표시
