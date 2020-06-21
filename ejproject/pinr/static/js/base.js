@@ -246,7 +246,8 @@ function getRouteListItem(route) {
     itemStr += '  <small class="text-muted">' + route.info.payment + '원' + '</small>';
     console.log(route.subPath[0].trafficType);
     for (i = 0; route.subPath.length; i++) {
-        if (route.subPath[1].trafficType == 1) { // 지하철일 때
+        console.log(route.subPath[0].trafficType);
+        if (route.subPath[i].trafficType == 1) { // 지하철일 때
             itemStr += '   <h5 class="mb-1">' + route.subPath[i].lane[0].subwayCode + '호선 ' ;
             if (i == 0 && i != route.subPath.length) {
                 itemStr += route.subPath[i].startName + '승차' + '</h5>';
@@ -257,7 +258,7 @@ function getRouteListItem(route) {
             } else {
                 itemStr += route.subPath[i].startName + '환승' + '</h5>';
             }
-        } else if (route.subPath[1].trafficType == 2) { // 버스일 때
+        } else if (route.subPath[i].trafficType == 2) { // 버스일 때
             itemStr += '   <h5 class="mb-1">' + route.subPath[i].lane[0].busNo + ' ';
             if (i == 0 && i != route.subPath.length) {
                 itemStr += route.subPath[i].startName + '승차' + '</h5>';
