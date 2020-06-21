@@ -188,9 +188,9 @@
                 }
             }
 
+            console.log(data_list)
             // displayPlaces(data_list);
             for(i=0; i<pagination_list.length; i++){
-                console.log(data_list[i])
                 console.log(pagination_list[i])
 
             }
@@ -198,7 +198,7 @@
 
         function placesSearchCB(data, status, pagination) {
             if (status === kakao.maps.services.Status.OK) {
-                data_list.push(data)
+                data_list.concat(data)
                 pagination_list.push(pagination)
 
             } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
