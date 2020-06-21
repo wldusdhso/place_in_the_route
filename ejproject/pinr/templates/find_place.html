@@ -182,6 +182,7 @@
             for (i=0; i<route_list.length; i++) {
                 for(j=0; j<route_list[i].length; j++){
                    console.log(ps.keywordSearch(keyword, placesSearchCB, { size: 6, location: route_list[i][j], radius : 500 }))
+
                 }
             }
         }
@@ -194,6 +195,7 @@
 
                 // 페이지 번호를 표출합니다
                 displayPagination(pagination);
+                return data;
 
             } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
 
