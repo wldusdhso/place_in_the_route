@@ -88,6 +88,7 @@
 
         var sx = '{{sx}}', sy = '{{sy}}', ex = '{{ex}}', ey = '{{ey}}', route_id = '{{route_id}}'
         var route_list = new Array();
+        console.log(route_id);
         searchPubTransPathAJAX(route_id)
 
         function searchPubTransPathAJAX(id) {
@@ -106,6 +107,7 @@
         }
        
         function callMapObjApiAJAX(mabObj) {
+            console.log('hi');
             var xhr = new XMLHttpRequest();
             //ODsay apiKey 입력
             var url = "https://api.odsay.com/v1/api/loadLane?mapObject=0:0@" + mabObj + "&apiKey=Z1tI1PHDPV7ueYpK4TUU2A";
