@@ -135,9 +135,7 @@
             var templist = new Array();
             console.log('실행');
             for (var i = 0; i < data.result.lane.length; i++) {
-                    console.log(data.result.lane[i]);
                 for (var j = 0; j < data.result.lane[i].section.length; j++) {
-
                     lineArray = null;
                     lineArray = new Array();
                     for (var k = 0; k < data.result.lane[i].section[j].graphPos.length; k++) {
@@ -181,12 +179,12 @@
             }
 
             // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
-            
-            ps.keywordSearch(keyword, placesSearchCB, { size: 6 });
-
-            // for (i=0; i<route_list.length; i++) {
-            //     ps.keywordSearch(keyword, placesSearchCB, { size: 6, radius : 500 });
-            // }
+            for (i=0; i<route_list.length; i++) {
+                for(j=0; j<route_list[i].length; j++){
+                    console.log(route_list[i][j])
+                    ps.keywordSearch(keyword, placesSearchCB, { size: 6, location: route_list[i][j], radius : 500 });
+                }
+            }
 
             // dataArray.extend(ps.keywordSearch(keyword, placesSearchCB, {
         //                     size: 6, 
