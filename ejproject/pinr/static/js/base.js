@@ -269,6 +269,8 @@ function getRouteListItem(route) {
             } else {
                 itemStr += subPath[i].startName + '환승' + '</h5>';
             }
+        } else {
+            
         }
     }
 
