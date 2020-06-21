@@ -114,7 +114,6 @@
             xhr.onreadystatechange = function () {
                 console.log(xhr.readyState, xhr.status)
                 if (xhr.readyState == 4 && xhr.status == 200) {
-                    console.log('start')
                     var resultJsonData = JSON.parse(xhr.responseText);
                     drawKakaoMarker(sx, sy);					// 출발지 마커 표시
                     drawKakaoMarker(ex, ey);					// 도착지 마커 표시
@@ -382,45 +381,6 @@
                 map: map
             });
         }
-
-        // 노선그래픽 데이터를 이용하여 지도위 폴리라인 그려주는 함수
-        function drawKakaoPolyLine(data) {
-            var lineArray;
-
-            for (var i = 0; i < data.result.lane.length; i++) {
-                for (var j = 0; j < data.result.lane[i].section.length; j++) {
-                    lineArray = null;
-                    lineArray = new Array();
-                    for (var k = 0; k < data.result.lane[i].section[j].graphPos.length; k++) {
-                        lineArray.push(new kakao.maps.LatLng(data.result.lane[i].section[j].graphPos[k].y, data.result.lane[i].section[j].graphPos[k].x));
-                    }
-
-                    //지하철결과의 경우 노선에 따른 라인색상 지정하는 부분 (1,2호선의 경우만 예로 들음)
-                    if (data.result.lane[i].type == 1) {
-                        var polyline = new kakao.maps.Polyline({
-                            map: map,
-                            path: lineArray,
-                            strokeWeight: 3,
-                            strokeColor: '#003499'
-                        });
-                    } else if (data.result.lane[i].type == 2) {
-                        var polyline = new kakao.maps.Polyline({
-                            map: map,
-                            path: lineArray,
-                            strokeWeight: 3,
-                            strokeColor: '#37b42d'
-                        });
-                    } else {
-                        var polyline = new kakao.maps.Polyline({
-                            map: map,
-                            path: lineArray,
-                            strokeWeight: 3
-                        });
-                    }
-                }
-            }
-        }
-        
     </script>
 </body>
 
