@@ -6,6 +6,16 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 
 var map = new kakao.maps.Map(mapContainer, mapOption);
 
+var options = {
+    map: map, // drawing manager로 그리기 요소를 그릴 map 객체 
+    drawingMode: [ // drawing manager로 제공할 그리기 요소 모드
+        kakao.maps.drawing.OverlayType.POLYLINE
+    ],
+    guideTooltip: ['draw', 'drag', 'edit']
+};
+
+var manager = new kakao.maps.drawing.DrawingManager(options);
+
 if (navigator.geolocation) {
 
     // GeoLocation을 이용해서 접속 위치를 얻어옵니다
@@ -24,8 +34,6 @@ map.addControl(zoomControl, kakao.maps.ControlPosition.TOPRIGHT);
 
 // 마커를 담을 배열입니다
 var markers = [];
-
-var lineArray = [];
 
 // 장소 검색 객체를 생성합니다
 var ps = new kakao.maps.services.Places();
@@ -279,10 +287,10 @@ function removeMarker() {
 
 // 지도 위에 표시되고 있는 폴리라인 모두 제거
 function removePolyline() {
-    for (var i = 0; i < lineArray.length; i++) {
-        lineArray[i].setMap(null);
-    }
-    lineArray = [];
+    var overlays = manager.getOverlays();
+    overlays['polyline'].forEach(function(polyline) {
+        manager.remove(polyline);
+    });
     console.log("폴라삭");
 }
 
@@ -385,6 +393,7 @@ function drawKakaoMarker(x, y) {
 
 // 노선그래픽 데이터를 이용하여 지도위 폴리라인 그려주는 함수
 function drawKakaoPolyLine(data) {
+    var lineArray;
 
     for (var i = 0; i < data.result.lane.length; i++) {
         for (var j = 0; j < data.result.lane[i].section.length; j++) {
