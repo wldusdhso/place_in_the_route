@@ -252,26 +252,26 @@ function getRouteListItem(route) {
 
     for (i = 0; i < subPathLength; i++) {
         if (route.subPath[i].trafficType == 1) { // 지하철일 때
-            itemStr += '   <h5 class="mb-1">' + route.subPath[i].lane[0].subwayCode + '호선 ' ;
+            itemStr += '   <h5 class="mb-1">' + route.subPath[i].lane[0].subwayCode + '호선 ' + '</h5>' ;
             if (i == 1 && i != subPathLength-2) {
-                itemStr += route.subPath[i].startName + '승차' + '</h5>';
+                itemStr += '<h6>' + route.subPath[i].startName + '승차' + '</h6>';
             } else if (i != 1 && i == subPathLength-2) {
-                itemStr += route.subPath[i].startName + '환승 -> ' + route.subPath[i].endName + '하차' + '</h5>';
+                itemStr += '<h6>' + route.subPath[i].startName + '환승 -> ' + route.subPath[i].endName + '하차' + '</h6>';
             } else if (i == 1 && i == subPathLength-2) {
-                itemStr += route.subPath[i].startName + '승차 -> ' + route.subPath[i].endName + '하차' + '</h5>';
+                itemStr += '<h6>' + route.subPath[i].startName + '승차 -> ' + route.subPath[i].endName + '하차' + '</h6>';
             } else {
-                itemStr += route.subPath[i].startName + '환승' + '</h5>';
+                itemStr += '<h6>' + route.subPath[i].startName + '환승' + '</h5>';
             }
         } else if (route.subPath[i].trafficType == 2) { // 버스일 때
-            itemStr += '   <h5 class="mb-1">' + route.subPath[i].lane[0].busNo + ' ';
+            itemStr += '   <h5 class="mb-1">' + route.subPath[i].lane[0].busNo + ' </h5>';
             if (i == 1 && i != subPathLength-2) {
-                itemStr += route.subPath[i].startName + '승차' + '</h5>';
+                itemStr += '<h6>' + route.subPath[i].startName + '승차' + '</h6>';
             } else if (i != 1 && i == subPathLength-2) {
-                itemStr += route.subPath[i].startName + '환승 -> ' + route.subPath[i].endName + '하차' + '</h5>';
+                itemStr += '<h6>' + route.subPath[i].startName + '환승 -> ' + route.subPath[i].endName + '하차' + '</h6>';
             } else if (i == 1 && i == subPathLength-2) {
-                itemStr += route.subPath[i].startName + '승차 -> ' + route.subPath[i].endName + '하차' + '</h5>';
+                itemStr += '<h6>' + route.subPath[i].startName + '승차 -> ' + route.subPath[i].endName + '하차' + '</h6>';
             } else {
-                itemStr += route.subPath[i].startName + '환승' + '</h5>';
+                itemStr += '<h6>' + route.subPath[i].startName + '환승' + '</h6>';
             }
         }
     }
@@ -440,75 +440,83 @@ function drawKakaoPolyLine(data) {
                 lineArray.push(new kakao.maps.LatLng(data.result.lane[i].section[j].graphPos[k].y, data.result.lane[i].section[j].graphPos[k].x));
             }
 
-            //지하철결과의 경우 노선에 따른 라인색상 지정하는 부분 (1,2호선의 경우만 예로 들음)
-            if (data.result.lane[i].type == 1) {
+            // 버스 결과의 경우 라인색상 지정
+            if (data.result.lane[i].class == 1) {
                 var polyline = new kakao.maps.Polyline({
                     map: map,
                     path: lineArray,
-                    strokeWeight: 3,
+                    strokeWeight: 5,
+                    strokeColor: '#007399'
+                });
+            // 지하철결과의 경우 노선에 따른 라인색상 지정하는 부분
+            } else if (data.result.lane[i].type == 1) {
+                var polyline = new kakao.maps.Polyline({
+                    map: map,
+                    path: lineArray,
+                    strokeWeight: 5,
                     strokeColor: '#003499'
                 });
             } else if (data.result.lane[i].type == 2) {
                 var polyline = new kakao.maps.Polyline({
                     map: map,
                     path: lineArray,
-                    strokeWeight: 3,
+                    strokeWeight: 5,
                     strokeColor: '#37b42d'
                 });
             } else if (data.result.lane[i].type == 3) {
                 var polyline = new kakao.maps.Polyline({
                     map: map,
                     path: lineArray,
-                    strokeWeight: 3,
+                    strokeWeight: 5,
                     strokeColor: '#E9945A'
                 });
             } else if (data.result.lane[i].type == 4) {
                 var polyline = new kakao.maps.Polyline({
                     map: map,
                     path: lineArray,
-                    strokeWeight: 3,
+                    strokeWeight: 5,
                     strokeColor: '#3165A8'
                 });
             } else if (data.result.lane[i].type == 5) {
                 var polyline = new kakao.maps.Polyline({
                     map: map,
                     path: lineArray,
-                    strokeWeight: 3,
+                    strokeWeight: 5,
                     strokeColor: '#703E8C'
                 });
             } else if (data.result.lane[i].type == 6) {
                 var polyline = new kakao.maps.Polyline({
                     map: map,
                     path: lineArray,
-                    strokeWeight: 3,
+                    strokeWeight: 5,
                     strokeColor: '#904D23'
                 });
             } else if (data.result.lane[i].type == 7) {
                 var polyline = new kakao.maps.Polyline({
                     map: map,
                     path: lineArray,
-                    strokeWeight: 3,
+                    strokeWeight: 5,
                     strokeColor: '#5B692E'
                 });
             } else if (data.result.lane[i].type == 8) {
                 var polyline = new kakao.maps.Polyline({
                     map: map,
                     path: lineArray,
-                    strokeWeight: 3,
+                    strokeWeight: 5,
                     strokeColor: '#C82363'
                 });
             } else if (data.result.lane[i].type == 9) {
                 var polyline = new kakao.maps.Polyline({
                     map: map,
                     path: lineArray,
-                    strokeWeight: 3,
+                    strokeWeight: 5,
                     strokeColor: '#B39627'
                 });
             } else {
                 var polyline = new kakao.maps.Polyline({
                     map: map,
                     path: lineArray,
-                    strokeWeight: 3
+                    strokeWeight: 5,
                 });
             } polylines.push(polyline);
         }
