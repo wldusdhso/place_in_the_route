@@ -88,6 +88,8 @@
 
         var sx = '{{sx}}', sy = '{{sy}}', ex = '{{ex}}', ey = '{{ey}}', route_id = '{{route_id}}'
         var route_list = new Array();
+        var data_list = []
+        var pagination_list = []
         searchPubTransPathAJAX(route_id)
 
         function searchPubTransPathAJAX(id) {
@@ -179,32 +181,29 @@
             }
 
             // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
+            
             for (i=0; i<route_list.length; i++) {
                 for(j=0; j<route_list[i].length; j++){
-                   console.log(ps.keywordSearch(keyword, placesSearchCB, { size: 6, location: route_list[i][j], radius : 500 }))
-
+                   ps.keywordSearch(keyword, placesSearchCB, { size: 6, location: route_list[i][j], radius : 500 });
                 }
+            }
+
+            displayPlaces(data_list);
+            for(i=0; i<pagination_list.length; i++){
+                console.log(pagination_list[i])
+
             }
         }
 
         function placesSearchCB(data, status, pagination) {
             if (status === kakao.maps.services.Status.OK) {
-                // 정상적으로 검색이 완료됐으면
-                // 검색 목록과 마커를 표출합니다
-                displayPlaces(data);
-
-                // 페이지 번호를 표출합니다
-                displayPagination(pagination);
-                return data;
+                data_list.append(data)
+                pagination_list.append(pagination)
 
             } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-
-                alert('검색 결과가 존재하지 않습니다.');
                 return;
 
             } else if (status === kakao.maps.services.Status.ERROR) {
-
-                alert('검색 결과 중 오류가 발생했습니다.');
                 return;
 
             }
