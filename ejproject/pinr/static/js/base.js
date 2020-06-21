@@ -89,7 +89,7 @@ function placesSearchCB(data, status, pagination) {
     }
 }
 
-// 검색 결과 목록과 마커를 표출하는 함수입니다
+// 장소 검색 결과 목록과 마커를 표출하는 함수입니다
 function displayPlaces(places) {
 
     var listEl = document.getElementById('placeList'),
@@ -108,7 +108,7 @@ function displayPlaces(places) {
         // 마커를 생성하고 지도에 표시합니다
         var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
             marker = addMarker(placePosition, i),
-            itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
+            itemEl = getListPlcaeItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         // LatLngBounds 객체에 좌표를 추가합니다
@@ -159,8 +159,57 @@ function displayPlaces(places) {
     map.setBounds(bounds);
 }
 
-// 검색결과 항목을 Element로 반환하는 함수입니다
-function getListItem(index, places) {
+// 경로 검색 결과 목록 표출하는 함수
+// function displayRoutes(routes) {
+
+//     var listEl = document.getElementById('placeList'),
+//         fragment = document.createDocumentFragment(),
+//         bounds = new kakao.maps.LatLngBounds();
+//         xhr = new XMLHttpRequest(),
+//         url = "https://api.odsay.com/v1/api/searchPubTransPath?SX=" + sx + "&SY=" + sy + "&EX=" + ex + "&EY=" + ey + "&apiKey=Z1tI1PHDPV7ueYpK4TUU2A";
+    
+    
+//     // 검색 결과 목록에 추가된 항목들 제거
+//     removeAllChildNods(listEl);
+
+//     // 지도에 표시되고 있는 마커를 제거
+//     removeMarker();
+
+//     xhr.open("GET", url, true);
+//     xhr.send();
+
+//     if (xhr.readyState == 4 && xhr.status == 200) {
+//         var routes = (JSON.parse(xhr.responseText))["result"]["path"];
+//     }
+
+//     for (var i = 0 ; i < routes.length ; i++) {
+
+//         var routeSection = new kakao.maps.LatLng()
+//             itemEl = getListRouteItem(i, routes[i]);
+
+//         (function (route) {
+//             itemEl.onmouseover = function () {
+//                 callMapObjApiAJAX(route.info.mapObj);
+//             };
+
+//             itemEl.onclick = function () {
+//                 // 데이터 넘겨주기
+//                 var listEl = document.getElementById('placeList');
+//                 removeAllChildNods(listEl);
+                
+//             };
+//         })(routes[i]);
+
+//         fragment.appendChild(itemEl);
+
+//     }
+
+//     // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
+//     listEl.appendChild(fragment);
+// }
+
+// 장소 검색결과 항목을 Element로 반환하는 함수입니다
+function getListPlaceItem(index, places) {
 
     var el = document.createElement('a'),
         itemStr = '<div class="d-flex w-100 justify-content-between">' +
@@ -179,6 +228,23 @@ function getListItem(index, places) {
 
     return el;
 }
+
+// 경로 검색결과 항목을 Element로 반환하는 함수입니다
+// function getListRouteItem(index, route) {
+
+//     var el = document.createElement('a'),
+//         itemStr = '<div class="d-flex w-100 justify-content-between">' +
+//             '   <h5 class="mb-1">' + route.info.totalTime + '분' + '</h5>' + '</div>';
+//     itemStr += '  <small class="text-muted">' + route.info.payment + '원' + '</small>';
+//     itemStr += '    <p class="mb-1">' + route.subPath.lane  + '</p>';
+    
+    
+
+//     el.innerHTML = itemStr;
+//     el.className = 'list-group-item list-group-item-action';
+
+//     return el;
+// }
 
 // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
 function addMarker(position, idx, title) {
