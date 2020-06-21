@@ -395,6 +395,8 @@ function callMapObjApiAJAX(mabObj) {
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
             var resultJsonData = JSON.parse(xhr.responseText);
+            removeMarker_route();
+            removePolyline();
             drawKakaoMarker(sx, sy);					// 출발지 마커 표시
             drawKakaoMarker(ex, ey);					// 도착지 마커 표시
             drawKakaoPolyLine(resultJsonData);		// 노선그래픽데이터 지도위 표시
