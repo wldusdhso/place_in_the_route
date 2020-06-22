@@ -22,7 +22,7 @@ def find_place(request):
         'sy' : sy,
         'ex' : ex,
         'ey' : ey,
-        'route' : route,
+        'route' : route
         })
 
 
