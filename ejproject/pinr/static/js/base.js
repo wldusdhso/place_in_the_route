@@ -43,7 +43,7 @@ function searchPlaces_start() {
     //지도 위 폴리라인과 마커 지우기
     removeMarker_route();
     removePolyline();
-
+    
     var keyword = document.getElementById('keyword_start').value;
 
     if (!keyword.replace(/^\s+|\s+$/g, '')) {
