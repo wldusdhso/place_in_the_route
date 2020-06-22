@@ -24,7 +24,9 @@ map.addControl(zoomControl, kakao.maps.ControlPosition.TOPRIGHT);
 
 // 마커를 담을 배열입니다
 var markers = [];
+// 출발지 도착지 마커를 담을 배열
 var markers_route = [];
+// 경로 폴리라인을 담을 배열
 var polylines =[];
 
 // 장소 검색 객체를 생성합니다
@@ -221,7 +223,7 @@ function displayRoutes() {
 // 장소 검색결과 항목을 Element로 반환하는 함수입니다
 function getPlaceListItem(places) {
 
-    //var el = document.createElement('a'),
+    var el = document.createElement('a'),
         itemStr = '<div class="d-flex w-100 justify-content-between">' +
             '   <h5 class="mb-1">' + places.place_name + '</h5>' + '</div>';
 
