@@ -120,6 +120,7 @@
 
         function drawKakaoPolyLine(data) {
             var lineArray;
+            var templist = new Array();
             console.log(data.result.lane)
             for (var i = 0; i < data.result.lane.length; i++) {
                 for (var j = 0; j < data.result.lane[i].section.length; j++) {
@@ -127,7 +128,7 @@
                     lineArray = new Array();
                     for (var k = 0; k < data.result.lane[i].section[j].graphPos.length; k++) {
                         lineArray.push(new kakao.maps.LatLng(data.result.lane[i].section[j].graphPos[k].y, data.result.lane[i].section[j].graphPos[k].x));
-                        route_list.concat(new kakao.maps.LatLng(data.result.lane[i].section[j].graphPos[k].y, data.result.lane[i].section[j].graphPos[k].x));
+                        templist.push(new kakao.maps.LatLng(data.result.lane[i].section[j].graphPos[k].y, data.result.lane[i].section[j].graphPos[k].x));
                     }
 
                     //지하철결과의 경우 노선에 따른 라인색상 지정하는 부분 (1,2호선의 경우만 예로 들음)
@@ -154,6 +155,7 @@
                     }
                 }
             }
+            route_list.concat(templist);
         }
 
         function searchPlaces() {
@@ -167,9 +169,7 @@
             // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
             
             for (i=0; i<route_list.length; i++) {
-                for(j=0; j<route_list[i].length; j++){
-                   ps.keywordSearch(keyword, placesSearchCB, { size: 6, location: route_list[i][j], radius : 500 });
-                }
+                   ps.keywordSearch(keyword, placesSearchCB, { size: 6, location: route_list[i], radius : 500 });
             }
 
             displayPlaces(data_list);
