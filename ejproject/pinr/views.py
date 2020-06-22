@@ -15,7 +15,7 @@ def find_place(request):
     sy = request.GET.get("sy")
     ex = request.GET.get("ex")
     ey = request.GET.get("ey")
-    route = json.loads(request.GET.get("route"))
+    route = json.load(request.GET.get("route"))
     print(route)
     return render(request, 'find_place.html', {
         'sx' : sx,
