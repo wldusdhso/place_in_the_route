@@ -4,12 +4,7 @@ from django.shortcuts import render
 def base(request):
     return render(request, 'base.html')
 
-def find_place(request):
-    # sx = request.POST['sx']
-    # sy = request.POST['sy']
-    # ex = request.POST['ex']
-    # ey = request.POST['ey']
-    # route_id = request.POST['route_id']
+def find_place(request, sx, sy, ex, ey, route):
 
     sx = 126.9027279
     sy = 37.5349277
