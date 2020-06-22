@@ -278,7 +278,8 @@ function getRouteListItem(route) {
             }
         }
     }
-    el.href = "{% url 'find_place' sx=" + sx + " sy=" + sy + " ex=" + ex + " ey=" + ey + " route=" + route + "%}";
+    el.href = "{% url 'find_place' %}";
+    // sx=" + sx + " sy=" + sy + " ex=" + ex + " ey=" + ey + " route=" + route + "%}";
     el.innerHTML = itemStr;
     el.className = 'list-group-item list-group-item-action';
 
