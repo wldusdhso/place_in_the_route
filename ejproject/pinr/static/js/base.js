@@ -1,9 +1,8 @@
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-
     mapOption = {
-    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-    level: 3 // 지도의 확대 레벨
-};
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };
 
 var map = new kakao.maps.Map(mapContainer, mapOption);
 
@@ -25,6 +24,8 @@ map.addControl(zoomControl, kakao.maps.ControlPosition.TOPRIGHT);
 
 // 마커를 담을 배열입니다
 var markers = [];
+var markers_route = [];
+var polylines =[];
 
 // 장소 검색 객체를 생성합니다
 var ps = new kakao.maps.services.Places();
@@ -32,9 +33,17 @@ var ps = new kakao.maps.services.Places();
 // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
 var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
+var start_or_end = '';
+var sx, sy, ex, ey ;
+
 // 키워드 검색을 요청하는 함수입니다
 function searchPlaces_start() {
     console.log("방가");
+
+    //지도 위 폴리라인과 마커 지우기
+    removeMarker_route();
+    removePolyline();
+
     var keyword = document.getElementById('keyword_start').value;
 
     if (!keyword.replace(/^\s+|\s+$/g, '')) {
@@ -42,18 +51,27 @@ function searchPlaces_start() {
         return false;
     }
 
+    start_or_end = 'start';
+
     // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
     ps.keywordSearch(keyword, placesSearchCB, { size: 6 });
 }
 
 function searchPlaces_end() {
-    console.log("메롱");
+    console.log("바이");
+
+    //지도 위 폴리라인과 마커 지우기
+    removeMarker_route();
+    removePolyline();
+
     var keyword = document.getElementById('keyword_end').value;
 
     if (!keyword.replace(/^\s+|\s+$/g, '')) {
         alert('키워드를 입력해주세요!');
         return false;
     }
+
+    start_or_end = 'end';
 
     // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
     ps.keywordSearch(keyword, placesSearchCB, { size: 6 });
@@ -83,7 +101,7 @@ function placesSearchCB(data, status, pagination) {
     }
 }
 
-// 검색 결과 목록과 마커를 표출하는 함수입니다
+// 장소 검색 결과 목록과 마커를 표출하는 함수입니다
 function displayPlaces(places) {
 
     var listEl = document.getElementById('placeList'),
@@ -102,7 +120,7 @@ function displayPlaces(places) {
         // 마커를 생성하고 지도에 표시합니다
         var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
             marker = addMarker(placePosition, i),
-            itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
+            itemEl = getPlaceListItem(places[i]); // 검색 결과 항목 Element를 생성합니다
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         // LatLngBounds 객체에 좌표를 추가합니다
@@ -129,6 +147,18 @@ function displayPlaces(places) {
             itemEl.onmouseout = function () {
                 infowindow.close();
             };
+
+            itemEl.onclick = function () {
+                if (start_or_end == 'start') {
+                    sx = place.x;
+                    sy = place.y; 
+                    console.log(sx);
+                } else if (start_or_end == 'end') {
+                    ex = place.x;
+                    ey = place.y;
+                    console.log(ex);
+                }
+            };
         })(marker, places[i]);
 
         fragment.appendChild(itemEl);
@@ -141,10 +171,57 @@ function displayPlaces(places) {
     map.setBounds(bounds);
 }
 
-// 검색결과 항목을 Element로 반환하는 함수입니다
-function getListItem(index, places) {
+// 경로 검색 결과 목록 표출하는 함수
+function displayRoutes() {
 
-    var el = document.createElement('a'),
+    var listEl = document.getElementById('placeList');
+        fragment = document.createDocumentFragment(),
+        xhr = new XMLHttpRequest(),
+        url = "https://api.odsay.com/v1/api/searchPubTransPath?SX=" + sx + "&SY=" + sy + "&EX=" + ex + "&EY=" + ey + "&apiKey=Z1tI1PHDPV7ueYpK4TUU2A";
+
+    // 검색 결과 목록에 추가된 항목들 제거
+    removeAllChildNods(listEl);
+
+    xhr.open("GET", url, true);
+    xhr.send();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var routes = (JSON.parse(xhr.responseText))["result"]["path"];
+
+            for (var i = 0; i < routes.length; i++) {
+
+                var routeSection = new kakao.maps.LatLng()
+                itemEl = getRouteListItem(routes[i]);
+
+                (function (route) {
+                    itemEl.onmouseover = function () {
+                        callMapObjApiAJAX(route.info.mapObj);
+                    };
+
+                    itemEl.onclick = function () {
+                        // 데이터 넘겨주기
+                        var listEl = document.getElementById('placeList'),
+                            paginationEl = document.getElementById('pagination');
+                        removeAllChildNods(listEl);
+                        while (paginationEl.hasChildNodes()) {
+                            paginationEl.removeChild(paginationEl.lastChild);
+                        }
+                    };
+                })(routes[i]);
+
+                fragment.appendChild(itemEl);
+
+            }
+            // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
+            listEl.appendChild(fragment);
+        }
+    }
+}
+
+// 장소 검색결과 항목을 Element로 반환하는 함수입니다
+function getPlaceListItem(places) {
+
+    //var el = document.createElement('a'),
         itemStr = '<div class="d-flex w-100 justify-content-between">' +
             '   <h5 class="mb-1">' + places.place_name + '</h5>' + '</div>';
 
@@ -156,6 +233,53 @@ function getListItem(index, places) {
 
     itemStr += '  <small class="text-muted">' + places.phone + '</small>';
 
+    el.innerHTML = itemStr;
+    el.className = 'list-group-item list-group-item-action';
+
+    return el;
+}
+
+// 경로 검색결과 항목을 Element로 반환하는 함수입니다
+function getRouteListItem(route) {
+
+    var el = document.createElement('a'),
+        itemStr = '<div class="d-flex w-100 justify-content-between">' +
+            '   <h5 class="mb-1">' + route.info.totalTime + '분' + '</h5>' + '</div>';
+    
+    itemStr += '  <small class="text-muted">' + route.info.payment + '원' + '</small>' + '<br/>';
+    
+    var subPathLength = route.subPath.length;
+
+    route.subPath[0].trafficType ==3
+    route.subPath[subPathLength-1].trafficType == 3
+
+    for (i = 0; i < subPathLength; i++) {
+        if (route.subPath[i].trafficType == 1) { // 지하철일 때
+            itemStr += '   <h5 class="mb-1">' + route.subPath[i].lane[0].subwayCode + '호선 ' + '</h5>';
+            if (i == 1 && i != subPathLength-2) {
+                itemStr += '<h6>' + route.subPath[i].startName + '승차' + '</h6>' + '<br/>';
+            } else if (i != 1 && i == subPathLength-2) {
+                itemStr += '<h6>' + route.subPath[i].startName + '환승 -> ' + route.subPath[i].endName + '하차' + '</h6>' + '<br/>';
+            } else if (i == 1 && i == subPathLength-2) {
+                itemStr += '<h6>' + route.subPath[i].startName + '승차 -> ' + route.subPath[i].endName + '하차' + '</h6>' + '<br/>';
+            } else {
+                itemStr += '<h6>' + route.subPath[i].startName + '환승' + '</h6>' + '<br/>';
+            }
+        } else if (route.subPath[i].trafficType == 2) { // 버스일 때
+            itemStr += '   <h5 class="mb-1">' + route.subPath[i].lane[0].busNo + ' </h5>';
+            if (i == 1 && i != subPathLength-2) {
+                itemStr += '<h6>' + route.subPath[i].startName + '승차' + '</h6>' + '<br/>';
+            } else if (i != 1 && i == subPathLength-2) {
+                itemStr += '<h6>' + route.subPath[i].startName + '환승 -> ' + route.subPath[i].endName + '하차' + '</h6>' + '<br/>';
+            } else if (i == 1 && i == subPathLength-2) {
+                itemStr += '<h6>' + route.subPath[i].startName + '승차 -> ' + route.subPath[i].endName + '하차' + '</h6>' + '<br/>';
+            } else {
+                itemStr += '<h6>' + route.subPath[i].startName + '환승' + '</h6>' + '<br/>';
+            }
+        }
+    }
+    el.href = "{% url 'find_place' %}";
+    // sx=" + sx + " sy=" + sy + " ex=" + ex + " ey=" + ey + " route=" + route + "%}";
     el.innerHTML = itemStr;
     el.className = 'list-group-item list-group-item-action';
 
@@ -183,12 +307,28 @@ function addMarker(position, idx, title) {
     return marker;
 }
 
-// 지도 위에 표시되고 있는 마커를 모두 제거합니다
+// 장소 검색 결과로 표시되고 있는 마커를 모두 제거합니다
 function removeMarker() {
     for (var i = 0; i < markers.length; i++) {
         markers[i].setMap(null);
     }
     markers = [];
+}
+
+// 경로의 출발지 도착지 마커를 제거합니다
+function removeMarker_route() {
+    for (var i = 0; i < markers_route.length; i++) {
+        markers_route[i].setMap(null);
+    }
+    markers_route = [];
+}
+
+// 지도 위 폴리라인 모두 제거
+function removePolyline() {
+    for (var i = 0; i < polylines.length; i++) {
+        polylines[i].setMap(null);
+    }
+    polylines = [];
 }
 
 // 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
@@ -239,6 +379,11 @@ function removeAllChildNods(el) {
 }
 
 function searchPubTransPathAJAX() {
+    // 지도 위 마커 제거
+    removeMarker();
+    // 경로 리스트 표출
+    displayRoutes();
+
     var xhr = new XMLHttpRequest();
     //ODsay apiKey 입력
     var url = "https://api.odsay.com/v1/api/searchPubTransPath?SX=" + sx + "&SY=" + sy + "&EX=" + ex + "&EY=" + ey + "&apiKey=Z1tI1PHDPV7ueYpK4TUU2A";
@@ -247,7 +392,6 @@ function searchPubTransPathAJAX() {
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
             console.log(xhr.responseText); // <- xhr.responseText 로 결과를 가져올 수 있음
-            //노선그래픽 데이터 호출
             callMapObjApiAJAX((JSON.parse(xhr.responseText))["result"]["path"][0].info.mapObj);
         }
     }
@@ -262,6 +406,8 @@ function callMapObjApiAJAX(mabObj) {
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
             var resultJsonData = JSON.parse(xhr.responseText);
+            removeMarker_route();
+            removePolyline();
             drawKakaoMarker(sx, sy);					// 출발지 마커 표시
             drawKakaoMarker(ex, ey);					// 도착지 마커 표시
             drawKakaoPolyLine(resultJsonData);		// 노선그래픽데이터 지도위 표시
@@ -283,6 +429,7 @@ function drawKakaoMarker(x, y) {
         position: new kakao.maps.LatLng(y, x),
         map: map
     });
+    markers_route.push(marker);
 }
 
 // 노선그래픽 데이터를 이용하여 지도위 폴리라인 그려주는 함수
@@ -297,28 +444,85 @@ function drawKakaoPolyLine(data) {
                 lineArray.push(new kakao.maps.LatLng(data.result.lane[i].section[j].graphPos[k].y, data.result.lane[i].section[j].graphPos[k].x));
             }
 
-            //지하철결과의 경우 노선에 따른 라인색상 지정하는 부분 (1,2호선의 경우만 예로 들음)
-            if (data.result.lane[i].type == 1) {
+            // 버스 결과의 경우 라인색상 지정
+            if (data.result.lane[i].class == 1) {
                 var polyline = new kakao.maps.Polyline({
                     map: map,
                     path: lineArray,
-                    strokeWeight: 3,
+                    strokeWeight: 5,
+                    strokeColor: '#007399'
+                });
+            // 지하철결과의 경우 노선에 따른 라인색상 지정하는 부분
+            } else if (data.result.lane[i].type == 1) {
+                var polyline = new kakao.maps.Polyline({
+                    map: map,
+                    path: lineArray,
+                    strokeWeight: 5,
                     strokeColor: '#003499'
                 });
             } else if (data.result.lane[i].type == 2) {
                 var polyline = new kakao.maps.Polyline({
                     map: map,
                     path: lineArray,
-                    strokeWeight: 3,
+                    strokeWeight: 5,
                     strokeColor: '#37b42d'
+                });
+            } else if (data.result.lane[i].type == 3) {
+                var polyline = new kakao.maps.Polyline({
+                    map: map,
+                    path: lineArray,
+                    strokeWeight: 5,
+                    strokeColor: '#E9945A'
+                });
+            } else if (data.result.lane[i].type == 4) {
+                var polyline = new kakao.maps.Polyline({
+                    map: map,
+                    path: lineArray,
+                    strokeWeight: 5,
+                    strokeColor: '#3165A8'
+                });
+            } else if (data.result.lane[i].type == 5) {
+                var polyline = new kakao.maps.Polyline({
+                    map: map,
+                    path: lineArray,
+                    strokeWeight: 5,
+                    strokeColor: '#703E8C'
+                });
+            } else if (data.result.lane[i].type == 6) {
+                var polyline = new kakao.maps.Polyline({
+                    map: map,
+                    path: lineArray,
+                    strokeWeight: 5,
+                    strokeColor: '#904D23'
+                });
+            } else if (data.result.lane[i].type == 7) {
+                var polyline = new kakao.maps.Polyline({
+                    map: map,
+                    path: lineArray,
+                    strokeWeight: 5,
+                    strokeColor: '#5B692E'
+                });
+            } else if (data.result.lane[i].type == 8) {
+                var polyline = new kakao.maps.Polyline({
+                    map: map,
+                    path: lineArray,
+                    strokeWeight: 5,
+                    strokeColor: '#C82363'
+                });
+            } else if (data.result.lane[i].type == 9) {
+                var polyline = new kakao.maps.Polyline({
+                    map: map,
+                    path: lineArray,
+                    strokeWeight: 5,
+                    strokeColor: '#B39627'
                 });
             } else {
                 var polyline = new kakao.maps.Polyline({
                     map: map,
                     path: lineArray,
-                    strokeWeight: 3
+                    strokeWeight: 5,
                 });
-            }
+            } polylines.push(polyline);
         }
     }
 }
