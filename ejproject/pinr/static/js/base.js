@@ -43,7 +43,7 @@ function searchPlaces_start() {
     //지도 위 폴리라인과 마커 지우기
     removeMarker_route();
     removePolyline();
-    
+
     var keyword = document.getElementById('keyword_start').value;
 
     if (!keyword.replace(/^\s+|\s+$/g, '')) {
@@ -221,7 +221,7 @@ function displayRoutes() {
 // 장소 검색결과 항목을 Element로 반환하는 함수입니다
 function getPlaceListItem(places) {
 
-    //var el = document.createElement('a'),
+    var el = document.createElement('a'),
         itemStr = '<div class="d-flex w-100 justify-content-between">' +
             '   <h5 class="mb-1">' + places.place_name + '</h5>' + '</div>';
 
