@@ -86,7 +86,7 @@
         // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
         var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
-        var sx = '{{sx}}', sy = '{{sy}}', ex = '{{ex}}', ey = '{{ey}}', route ='{{route}}'.replace(/&quot;/g, '"');
+        var sx = '{{sx}}', sy = '{{sy}}', ex = '{{ex}}', ey = '{{ey}}', route =JSON.parse('{{route}}'.replace(/&quot;/g, '"'));
         console.log(route);
         var route_list = new Array();
         var data_list = new Array();
