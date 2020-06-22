@@ -170,10 +170,7 @@
                    ps.keywordSearch(keyword, placesSearchCB, { size: 6, x: route_list[i][0], y : route_list[i][1], radius : 500 });
             }
 
-            data_list2 = data_list.reduce(( a, b ) => {
-                if( a.indexOf(b) < 0 ) a.push(b) ;
-                return a ;
-            }, []) ;
+            var data_list2 = data_list.filter((item, index) => data_list.indexOf(item) === index );
 
             displayPlaces(data_list2);                                                               
         }
