@@ -170,11 +170,12 @@
                    ps.keywordSearch(keyword, placesSearchCB, { size: 6, x: route_list[i][0], y : route_list[i][1], radius : 500 });
             }
 
-            data_list = data_list.reduce(( a, b ) => {
+            data_list2 = data_list.reduce(( a, b ) => {
                 if( a.indexOf(b) < 0 ) a.push(b) ;
                 return a ;
             }, []) ;
-            displayPlaces(data_list);                                                               
+
+            displayPlaces(data_list2);                                                               
         }
 
         function placesSearchCB(data, status, pagination) {
