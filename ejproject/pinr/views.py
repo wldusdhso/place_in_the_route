@@ -5,7 +5,6 @@ def base(request):
     return render(request, 'base.html')
 
 def find_place(request, sx, sy, ex, ey, route):
-
     sx = 126.9027279
     sy = 37.5349277
     ex = 126.9145430
