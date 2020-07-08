@@ -90,6 +90,7 @@
 
         var route_list = new Array();
         var data_list = new Array();
+        var display_list = new Array();
         var pagination_count = 0;
         callMapObjApiAJAX(route.info.mapObj);
        
@@ -170,9 +171,9 @@
                    ps.keywordSearch(keyword, placesSearchCB, { size: 6, location: new kakao.maps.LatLng(route_list[i][0], y : route_list[i][1]) , radius : 500 });
             }
 
-            Array.from(new Set(data_list));
+            display_list = Array.from(new Set(data_list));
 
-            displayPlaces(data_list);                                                               
+            displayPlaces(display_list);                                                               
         }
 
         function placesSearchCB(data, status, pagination) {
