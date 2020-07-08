@@ -173,7 +173,7 @@
             console.log(data_list)
             var data_list_ = data_list.reduce((prev, now) => {
 
-                if (!prev.some(obj => obj.id !== now.id )) {
+                if (!prev.some(obj => obj.id === now.id )) {
 
                     prev.push(now);
 
