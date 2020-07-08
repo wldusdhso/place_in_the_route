@@ -166,9 +166,11 @@
 
             // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
             
-            for (i=0; i<route_list.length; i++) {
-                   ps.keywordSearch(keyword, placesSearchCB, { size: 6, x: route_list[i][0], y : route_list[i][1], radius : 500 });
-            }
+            // for (i=0; i<route_list.length; i++) {
+            //        ps.keywordSearch(keyword, placesSearchCB, { size: 6, x: route_list[i][0], y : route_list[i][1], radius : 500 });
+            // }
+
+            ps.keywordSearch(keyword, placesSearchCB, { size: 6, x:37.58569280672345, y:127.00159276526347, radius : 500 });
 
             displayPlaces(data_list);                                                               
         }
