@@ -167,18 +167,14 @@
             
 
             for (i=0; i<route_list.length; i++) {
-                   ps.keywordSearch(keyword, placesSearchCB, { size: 6, location : new kakao.maps.LatLng(route_list[i][0], route_list[i][1]), radius : 500 });
+                   ps.keywordSearch(keyword, placesSearchCB, { location : new kakao.maps.LatLng(route_list[i][0], route_list[i][1]), radius : 500 });
             }
 
             console.log(data_list)
             var data_list_ = data_list.reduce((prev, now) => {
-
                 if (!prev.some(obj => obj.id === now.id )) {
-
                     prev.push(now);
-
                 }
-
                 return prev;
 
             }, []);
@@ -213,7 +209,7 @@
 
         // 지도에 표시되고 있는 마커를 제거합니다
         removeMarker();
-
+        console.log(places.length)
         for (var i = 0; i < places.length; i++) {
 
             // 마커를 생성하고 지도에 표시합니다
