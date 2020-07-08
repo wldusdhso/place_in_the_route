@@ -99,7 +99,6 @@
             xhr.open("GET", url, true);
             xhr.send();
             xhr.onreadystatechange = function () {
-                console.log(xhr.readyState, xhr.status)
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     var resultJsonData = JSON.parse(xhr.responseText);
                     drawKakaoMarker(sx, sy);					// 출발지 마커 표시
@@ -170,22 +169,20 @@
             }
 
             // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
-            (async() => {
-                for (i=0; i<route_list.length; i++) {
+            for (i=0; i<route_list.length; i++) {
                    ps.keywordSearch(keyword, placesSearchCB, { location : new kakao.maps.LatLng(route_list[i][0], route_list[i][1]), radius : 500 });
                 }
-                console.log('1'+data_list.length)
-            })().then((result) => {
+            
+            setTimeout(function(){
                 var data_list_ = data_list.reduce((prev, now) => {
                     if (!prev.some(obj => obj.id === now.id )) {
                         prev.push(now);
                     }
                     return prev;
                 }, []);
-                console.log('2'+data_list.length)
                 displayPlaces(data_list_); 
-                console.log('3'+data_list.length)
-            })
+            }, 3000)
+                
 
                                                                           
         }
