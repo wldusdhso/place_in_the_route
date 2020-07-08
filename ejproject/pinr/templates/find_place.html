@@ -102,8 +102,8 @@
                 console.log(xhr.readyState, xhr.status)
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     var resultJsonData = JSON.parse(xhr.responseText);
-                    drawKakaoMarker(sx, sy);					// 출발지 마커 표시
-                    drawKakaoMarker(ex, ey);					// 도착지 마커 표시
+                    drawKakaoMarker_start(sx, sy);					// 출발지 마커 표시
+                    drawKakaoMarker_end(ex, ey);					// 도착지 마커 표시
                     drawKakaoPolyLine(resultJsonData);		// 노선그래픽데이터 지도위 표시
                     // boundary 데이터가 있을경우, 해당 boundary로 지도이동
                     if (resultJsonData.result.boundary) {
