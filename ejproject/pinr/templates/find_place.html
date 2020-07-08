@@ -52,8 +52,7 @@
                         </form>
                     </div>
                     <hr>
-                    <div class="list-group" id="placeList"></div>
-                    <div id="pagination" style="text-align: center; letter-spacing: 10px; font-size: large;"></div>
+                    <div class="list-group" id="placeList" style="height: 700px; overflow:auto;"></div>
                 </div>
             </div>
             <div class="col">
@@ -166,11 +165,25 @@
 
             // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
             
+
             for (i=0; i<route_list.length; i++) {
-                   ps.keywordSearch(keyword, placesSearchCB, { size: 6, x: route_list[i][0], y : route_list[i][1], radius : 500 });
+                   ps.keywordSearch(keyword, placesSearchCB, { size: 6, location : new kakao.maps.LatLng(route_list[i][0], route_list[i][1]), radius : 500 });
             }
 
-            displayPlaces(data_list);                                                               
+            console.log(data_list)
+            var data_list_ = data_list.reduce((prev, now) => {
+
+                if (!prev.some(obj => obj.id === now.id )) {
+
+                    prev.push(now);
+
+                }
+
+                return prev;
+
+            }, []);
+            console.log(data_list_)
+            displayPlaces(data_list_);                                                               
         }
 
         function placesSearchCB(data, status, pagination) {
