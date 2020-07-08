@@ -278,7 +278,6 @@
         function addMarker(position) {
             var marker = new kakao.maps.Marker({
                     position: position, // 마커의 위치
-                    image: markerImage
                 });
 
             marker.setMap(map); // 지도 위에 마커를 표출합니다
@@ -342,7 +341,7 @@
             }
         }
 
-        
+                
         // 지도위 마커 표시해주는 함수
         function drawKakaoMarker_start(x, y) {
             var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/red_b.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
@@ -373,6 +372,8 @@
                     image: markerImage
             });
         }
+
+
     </script>
 </body>
 
