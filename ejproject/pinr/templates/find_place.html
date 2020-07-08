@@ -170,7 +170,7 @@
                    ps.keywordSearch(keyword, placesSearchCB, { size: 6, location : new kakao.maps.LatLng(route_list[i][0], route_list[i][1]), radius : 500 });
             }
 
-            data_list = data_list.filter((item, pos) => data_list.indexOf(item) === pos)
+            data_list = Array.from(new Set(data_list))
             displayPlaces(data_list);                                                               
         }
 
