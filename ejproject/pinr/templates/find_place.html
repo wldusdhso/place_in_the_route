@@ -88,6 +88,8 @@
 
         var sx = '{{sx}}', sy = '{{sy}}', ex = '{{ex}}', ey = '{{ey}}', route =JSON.parse('{{route}}'.replace(/&quot;/g, '"'));
 
+        var nothing;
+
         var route_list = new Array();
         var data_list = new Array();
         var display_list = new Array();
@@ -177,7 +179,7 @@
         function placesSearchCB(data, status, pagination) {
             if (status === kakao.maps.services.Status.OK) {
                 if(data_list.includes(data)){
-                    
+                    nothing = 0;
                 } else {
                     data_list.concat(data);
                 }
