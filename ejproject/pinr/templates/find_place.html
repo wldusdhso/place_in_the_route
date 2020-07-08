@@ -156,7 +156,12 @@
         }
 
         function searchPlaces() {
-            
+            var submitAction = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                /* do something with Error */
+            };
+            $('form').bind('submit', submitAction);
             var keyword = document.getElementById('keyword').value;
 
             if (!keyword.replace(/^\s+|\s+$/g, '')) {
@@ -165,18 +170,22 @@
             }
 
             // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
-            for (i=0; i<route_list.length; i++) {
+            (async() => {
+                for (i=0; i<route_list.length; i++) {
                    ps.keywordSearch(keyword, placesSearchCB, { location : new kakao.maps.LatLng(route_list[i][0], route_list[i][1]), radius : 500 });
-            }
-
-            var data_list_ = data_list.reduce((prev, now) => {
+                }
+            })().then((result) => {
+                var data_list_ = data_list.reduce((prev, now) => {
                 if (!prev.some(obj => obj.id === now.id )) {
                     prev.push(now);
                 }
                 return prev;
 
-            }, []);
-            displayPlaces(data_list_);                                                               
+                }, []);
+                displayPlaces(data_list_); 
+            })
+
+                                                                          
         }
 
         function placesSearchCB(data, status, pagination) {
