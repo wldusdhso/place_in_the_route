@@ -171,7 +171,13 @@
             }
 
             console.log(data_list)
-            data_list = Array.from(new Set(data_list))
+            var filtered = data_list.filtered(function(a) {
+                var key = Object.keys(a).map(function(k) {return a[k];}).join('|');
+                if (!this[key]){
+                    return this[key] = true;
+                }
+            }, Object.create(null));
+            data_list = filtered
             console.log(data_list)
             displayPlaces(data_list);                                                               
         }
