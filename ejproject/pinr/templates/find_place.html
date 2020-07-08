@@ -285,7 +285,9 @@
                 },
                 markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
                 marker = new kakao.maps.Marker({
-                    position: position, // 마커의 위치
+                    position: position,
+                    image: markerImage
+                     // 마커의 위치
                 });
 
             marker.setMap(map); // 지도 위에 마커를 표출합니다
