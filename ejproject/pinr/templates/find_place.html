@@ -171,7 +171,7 @@
             }
 
             console.log(data_list)
-            data_list = data_list.reduce((prev, now) => {
+            var data_list_ = data_list.reduce((prev, now) => {
 
                 if (!prev.some(obj => obj.id !== now.id )) {
 
@@ -182,7 +182,7 @@
                 return prev;
 
             }, []);
-            displayPlaces(data_list);                                                               
+            displayPlaces(data_list_);                                                               
         }
 
         function placesSearchCB(data, status, pagination) {
