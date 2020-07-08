@@ -167,12 +167,10 @@
             
 
             for (i=0; i<route_list.length; i++) {
-                   ps.keywordSearch(keyword, placesSearchCB, { size: 6, x: route_list[i][0], y : route_list[i][1], radius : 500 });
+                   ps.keywordSearch(keyword, placesSearchCB, { size: 6, location : new kakao.maps.LatLng(route_list[i][0], route_list[i][1]), radius : 500 });
             }
 
-            var data_list2 = data_list.filter((item, index) => data_list.indexOf(item) === index );
-            console.log(data_list2)
-            displayPlaces(data_list2);                                                               
+            displayPlaces(data_list);                                                               
         }
 
         function placesSearchCB(data, status, pagination) {
