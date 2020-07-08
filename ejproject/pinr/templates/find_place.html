@@ -176,7 +176,7 @@
 
         function placesSearchCB(data, status, pagination) {
             if (status === kakao.maps.services.Status.OK) {
-                if(data_list.includes(data)){
+                if(!(data_list.includes(data))){
                     continue;
                 } else {
                     data_list = data_list.concat(data)
