@@ -88,11 +88,9 @@
 
         var sx = '{{sx}}', sy = '{{sy}}', ex = '{{ex}}', ey = '{{ey}}', route =JSON.parse('{{route}}'.replace(/&quot;/g, '"'));
 
-        var nothing;
-
         var route_list = new Array();
         var data_list = new Array();
-        var display_list = new Array();
+        var data_id_list = new Array();
         var pagination_count = 0;
         callMapObjApiAJAX(route.info.mapObj);
        
@@ -178,10 +176,10 @@
 
         function placesSearchCB(data, status, pagination) {
             if (status === kakao.maps.services.Status.OK) {
-                if(data_list.includes(data) == false){
+                if(data_id_list.includes(data[id]) == false){
+                    data_id_list.concat(data[id]);
                     data_list.concat(data);
                 }
-
             } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
                 return;
 
