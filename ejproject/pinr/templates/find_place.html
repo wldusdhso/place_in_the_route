@@ -171,14 +171,14 @@
                    ps.keywordSearch(keyword, placesSearchCB, { size: 6, location: new kakao.maps.LatLng(route_list[i][0], route_list[i][1]) , radius : 500 });
             }
 
-            display_list = Array.from(new Set(data_list));
-
-            displayPlaces(display_list);                                                               
+            displayPlaces(data_list);                                                               
         }
 
         function placesSearchCB(data, status, pagination) {
             if (status === kakao.maps.services.Status.OK) {
-                if(!(data_list.includes(data))){
+                if(data_list.includes(data)){
+                    continue;
+                } else {
                     data_list = data_list.concat(data)
                 }
 
