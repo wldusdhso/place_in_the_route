@@ -169,8 +169,6 @@
             // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
         }
         function callback1(keyword, callback) {
-            console.log(keyword);
-            console.log(route_list);
             console.log("start");
             for (i = 0; i < route_list.length; i++) {
                 ps.keywordSearch(keyword, placesSearchCB, { location: new kakao.maps.LatLng(route_list[i][0], route_list[i][1]), radius: 500 });
@@ -197,9 +195,9 @@
         var count=0;
 
         function placesSearchCB(data, status, pagination) {
-            // console.log(count);
-            //     count+=1;
-            // console.log(status);
+            console.log(count);
+                count+=1;
+            console.log(status);
             if (status === kakao.maps.services.Status.OK) {
                 data_list = data_list.concat(data)
                 
