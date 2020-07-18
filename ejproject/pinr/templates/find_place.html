@@ -96,7 +96,7 @@
         callMapObjApiAJAX(route.info.mapObj);
 
         function callMapObjApiAJAX(mabObj) {
-            console.log("callMapObjApiAJAX")
+            console.log("callMapObjApiAJAX");
             var xhr = new XMLHttpRequest();
             //ODsay apiKey 입력
             var url = "https://api.odsay.com/v1/api/loadLane?mapObject=0:0@" + mabObj + "&apiKey=Z1tI1PHDPV7ueYpK4TUU2A";
@@ -173,7 +173,7 @@
 
             console.log("start");
             count=0;
-            console.log(route_list)
+            console.log(route_list);
             for (i = 0; i < route_list.length; i++) {
                 ps.keywordSearch(keyword, placesSearchCB, { location: new kakao.maps.LatLng(route_list[i][0], route_list[i][1]), radius: 500 });
             }
@@ -182,7 +182,7 @@
 
         function placesSearchCB(data, status, pagination) {
             count+=1;
-            console.log(count)
+            console.log(count);
             if (status === kakao.maps.services.Status.OK) {
                 data_list = data_list.concat(data);
 
@@ -224,7 +224,7 @@
 
             // 지도에 표시되고 있는 마커를 제거합니다
             removeMarker();
-            console.log(places.length)
+            console.log(places.length);
             for (var i = 0; i < places.length; i++) {
 
                 // 마커를 생성하고 지도에 표시합니다
