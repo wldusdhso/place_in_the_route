@@ -181,6 +181,7 @@
 
         function callback2() {
             console.log("2");
+            console.log(data_list);
             var data_list_ = data_list.reduce((prev, now) => {
                 if (!prev.some(obj => obj.id === now.id)) {
                     prev.push(now);
@@ -199,8 +200,8 @@
             //     count+=1;
             // console.log(status);
             if (status === kakao.maps.services.Status.OK) {
-                data_list = data_list.concat(data)
-                
+                data_list = data_list.concat(data);
+                console.log(data);
 
             } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
                 return;
