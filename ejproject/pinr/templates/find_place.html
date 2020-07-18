@@ -173,6 +173,7 @@
             var timer = setTimeout(callback2, 5000);
             if( count == route_list.length){
                 clearTimeout(timer);
+                console.log("timer");
                 callback2();
             }
         }
