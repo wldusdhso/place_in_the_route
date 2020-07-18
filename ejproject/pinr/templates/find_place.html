@@ -171,10 +171,7 @@
 
             callback1(keyword);
             var timerId2 = setTimeout(callback2, 100000);
-            if( count == route_list.length){
-                console.log("ok")
-                clearTimeout(timerId2);
-            }
+            
         }   
 
         function callback1(keyword) {
@@ -215,6 +212,10 @@
             } else if (status === kakao.maps.services.Status.ERROR) {
                 return;
 
+            }
+            if( count == route_list.length){
+                console.log("ok")
+                clearTimeout(timerId2);
             }
         }
 
