@@ -172,9 +172,9 @@
             callback1(keyword);
             var timerId2 = setTimeout(callback2, 100000);
             if( count == route_list.length){
-            clearTimeout(timerId2);
+                clearTimeout(timerId2);
             }
-        }
+        }   
 
         function callback1(keyword) {
             console.log("start");
@@ -204,7 +204,7 @@
 
         function placesSearchCB(data, status, pagination) {
             count+=1;
-
+            console.log(count)
             if (status === kakao.maps.services.Status.OK) {
                 data_list = data_list.concat(data);
 
