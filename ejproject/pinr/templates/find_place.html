@@ -173,9 +173,9 @@
             var timer = setTimeout(callback2, 5000);
             if( count == route_list.length){
                 clearTimeout(timer);
+                callback2()
             }
         }
-
 
         function callback1(keyword) {
             for (i = 0; i < route_list.length; i++) {
