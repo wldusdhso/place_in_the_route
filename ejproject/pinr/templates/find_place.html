@@ -158,19 +158,18 @@
             }
         }
 
-        var keyword;
         function searchPlaces() {
 
             data_list = [];
 
-             keyword = document.getElementById('keyword').value;
+            var keyword = document.getElementById('keyword').value;
 
             if (!keyword.replace(/^\s+|\s+$/g, '')) {
                 alert('키워드를 입력해주세요!');
                 return false;
             }
 
-            callback(keyword);
+            callback1(keyword);
             var timerId2 = setTimeout(callback2, 5000);
             if( count == route_list.length){
             clearTimeout(timerId2);
@@ -189,7 +188,6 @@
         }
 
         
-        }
 
         function callback2() {
             while(count!=route_list.length){
