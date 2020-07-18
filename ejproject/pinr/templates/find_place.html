@@ -165,26 +165,25 @@
                 alert('키워드를 입력해주세요!');
                 return false;
             }
-            callback1(keyword, callback2);
+            callback2(keyword, callback3);
             // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
         }
 
-        function callback3(keyword, callback_){
+        function callback1(keyword){
             for (i = 0; i < route_list.length; i++) {
                 ps.keywordSearch(keyword, placesSearchCB, { location: new kakao.maps.LatLng(route_list[i][0], route_list[i][1]), radius: 500 });
             }
         }
 
-        function callback1(keyword, callback) {
+        function callback2(keyword, callback) {
             console.log("start");
-            
-            callback3(keyword, callback_);
             console.log("1");
+            callback1(keyword);
             callback();
             console.log("4");
         }
 
-        function callback2() {
+        function callback3() {
             console.log("2");
             console.log(data_list);
             var data_list_ = data_list.reduce((prev, now) => {
