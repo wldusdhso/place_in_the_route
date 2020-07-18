@@ -45,7 +45,7 @@
                 <br>
                 <div>
                     <div class="form-group">
-                        <form onsubmit="searchPlaces(); return false;">
+                        <form onsubmit="searchPlaces(); callback1(); callback2() ;return false;">
                             <input class="form-control form-control-lg" type="text" id="keyword" placeholder="장소">
                             <button type="reset" class="btn btn-primary mb-2">Reset</button>
                             <button type="submit" class="btn btn-primary mb-2">Search</button>
@@ -90,6 +90,9 @@
         var route_list = new Array();
         var data_list = new Array();
         var pagination_count = 0;
+
+        var count = 0;
+
         callMapObjApiAJAX(route.info.mapObj);
 
         function callMapObjApiAJAX(mabObj) {
@@ -165,26 +168,29 @@
                 alert('키워드를 입력해주세요!');
                 return false;
             }
-            callback1(keyword, callback2);
-            // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
+
+
+            callback1(keyword);
+            var timerId2 = setTimeout(callback2, 100000);
+            if( count == route_list.length){
+            clearTimeout(timerId2);
+            }
         }
 
-
-        function callback1(keyword, callback) {
+        function callback1(keyword) {
             console.log("start");
-            for (var i = 0; i < route_list.length; i++) {
-                this.setTimeout(
-                    ps.keywordSearch(keyword, placesSearchCB, { location: new kakao.maps.LatLng(route_list[i][0], route_list[i][1]), radius: 500 })
-                    , 10)
-            }
             console.log("1");
-            return callback();
+            for (i = 0; i < route_list.length; i++) {
+                ps.keywordSearch(keyword, placesSearchCB, { location: new kakao.maps.LatLng(route_list[i][0], route_list[i][1]), radius: 500 });
+            }
+            console.log(route_list.length);
             console.log("4");
         }
 
+        
+
         function callback2() {
             console.log("2");
-            console.log(data_list);
             var data_list_ = data_list.reduce((prev, now) => {
                 if (!prev.some(obj => obj.id === now.id)) {
                     prev.push(now);
@@ -193,17 +199,13 @@
 
             }, []);
             displayPlaces(data_list_);
-            console.log(data_list_);
             console.log("3");
         }
 
-        
-        var count=0;
 
         function placesSearchCB(data, status, pagination) {
-            console.log(count);
             count+=1;
-            console.log(status);
+
             if (status === kakao.maps.services.Status.OK) {
                 data_list = data_list.concat(data);
                 console.log(data);
