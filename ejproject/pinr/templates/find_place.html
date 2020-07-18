@@ -158,6 +158,8 @@
             }
         }
 
+        var timer;
+
         function searchPlaces() {
 
             data_list = [];
@@ -170,15 +172,14 @@
             }
 
             callback1(keyword);
-            var timer = setTimeout(callback2, 5000);
-            if( count == route_list.length){
-                clearTimeout(timer);
-                console.log("timer");
-                callback2();
-            }
+            timer = setTimeout(callback2, 5000);
+            
         }
 
         function callback1(keyword) {
+
+            count = 0;
+
             for (i = 0; i < route_list.length; i++) {
                 ps.keywordSearch(keyword, placesSearchCB, { location: new kakao.maps.LatLng(route_list[i][0], route_list[i][1]), radius: 500 });
             }
@@ -210,6 +211,10 @@
             } else if (status === kakao.maps.services.Status.ERROR) {
                 return;
 
+            }
+            if( count == route_list.length){
+                clearTimeout(timer);
+                callback2();
             }
         }
 
