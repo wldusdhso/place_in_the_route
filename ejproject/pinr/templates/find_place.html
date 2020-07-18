@@ -180,14 +180,15 @@
                 ps.keywordSearch(keyword, placesSearchCB, { location: new kakao.maps.LatLng(route_list[i][0], route_list[i][1]), radius: 500 });
             }
             console.log(route_list.length);
-            while(count!=route_list.length){
-                console.log(count);
-            }
+            
             callback();
             console.log("4");
         }
 
         function callback2() {
+            while(count!=route_list.length){
+                console.log(count);
+            }
             console.log("2");
             console.log(data_list);
             var data_list_ = data_list.reduce((prev, now) => {
