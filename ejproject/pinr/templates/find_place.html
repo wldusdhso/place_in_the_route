@@ -169,6 +169,12 @@
                 alert('키워드를 입력해주세요!');
                 return false;
             }
+
+            callback(keyword);
+            var timerId2 = setTimeout(callback2, 5000);
+            if( count == route_list.length){
+            clearTimeout(timerId2);
+            }
         }
 
 
@@ -180,6 +186,9 @@
             }
             console.log(route_list.length);
             console.log("4");
+        }
+
+        
         }
 
         function callback2() {
