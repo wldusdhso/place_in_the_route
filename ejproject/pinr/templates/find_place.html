@@ -196,7 +196,6 @@
 
             if( count == route_list.length){
                 callback();
-                return;
             }
         }
 
@@ -206,9 +205,9 @@
                     prev.push(now);
                 }
                 return prev;
-
             }, []);
             displayPlaces(data_list_);
+            console.log("finish");
         }
 
 
