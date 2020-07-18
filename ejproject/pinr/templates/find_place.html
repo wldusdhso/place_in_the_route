@@ -175,7 +175,7 @@
             for (var i = 0; i < route_list.length; i++) {
                 this.setTimeout(
                     (ps.keywordSearch(keyword, placesSearchCB, { location: new kakao.maps.LatLng(route_list[i][0], route_list[i][1]), radius: 500 })
-                )(keyword, i), 10)
+                    )(keyword, route_list, i), 10)
             }
             console.log("1");
             return callback();
