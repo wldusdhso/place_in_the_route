@@ -170,35 +170,12 @@
             }
 
 
-            callback1(keyword);
-            
-        }   
-
-        function callback1(keyword) {
             console.log("start");
-            console.log("1");
             for (i = 0; i < route_list.length; i++) {
                 ps.keywordSearch(keyword, placesSearchCB, { location: new kakao.maps.LatLng(route_list[i][0], route_list[i][1]), radius: 500 });
             }
-            console.log(route_list.length);
-            console.log("2");
-        }
-
-        
-
-        function callback2() {
-            console.log("3");
-            var data_list_ = data_list.reduce((prev, now) => {
-                if (!prev.some(obj => obj.id === now.id)) {
-                    prev.push(now);
-                }
-                return prev;
-
-            }, []);
-            displayPlaces(data_list_);
-            console.log("4");
-        }
-
+            
+        }   
 
         function placesSearchCB(data, status, pagination) {
             count+=1;
@@ -213,10 +190,22 @@
                 return;
 
             }
+
             if( count == route_list.length){
-                console.log("ok")
-                callback2()
+                callback()
             }
+        }
+
+        function callback() {
+            var data_list_ = data_list.reduce((prev, now) => {
+                if (!prev.some(obj => obj.id === now.id)) {
+                    prev.push(now);
+                }
+                return prev;
+
+            }, []);
+            displayPlaces(data_list_);
+            count=0
         }
 
 
