@@ -171,7 +171,6 @@
 
 
             callback1(keyword);
-            timerId2 = setTimeout(callback2, 100000);
             
         }   
 
@@ -182,13 +181,13 @@
                 ps.keywordSearch(keyword, placesSearchCB, { location: new kakao.maps.LatLng(route_list[i][0], route_list[i][1]), radius: 500 });
             }
             console.log(route_list.length);
-            console.log("4");
+            console.log("2");
         }
 
         
 
         function callback2() {
-            console.log("2");
+            console.log("3");
             var data_list_ = data_list.reduce((prev, now) => {
                 if (!prev.some(obj => obj.id === now.id)) {
                     prev.push(now);
@@ -197,7 +196,7 @@
 
             }, []);
             displayPlaces(data_list_);
-            console.log("3");
+            console.log("4");
         }
 
 
@@ -216,7 +215,7 @@
             }
             if( count == route_list.length){
                 console.log("ok")
-                clearTimeout(timerId2);
+                callback2()
             }
         }
 
