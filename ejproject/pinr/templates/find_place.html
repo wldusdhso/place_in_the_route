@@ -90,6 +90,9 @@
         var route_list = new Array();
         var data_list = new Array();
         var pagination_count = 0;
+
+        var count = 0;
+
         callMapObjApiAJAX(route.info.mapObj);
 
         function callMapObjApiAJAX(mabObj) {
@@ -165,25 +168,24 @@
                 alert('키워드를 입력해주세요!');
                 return false;
             }
-            callback2(keyword, callback3);
+            callback2(keyword, callback2);
             // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
         }
 
-        function callback1(keyword){
+
+        function callback1(keyword, callback) {
+            console.log("start");
+            console.log("1");
             for (i = 0; i < route_list.length; i++) {
                 ps.keywordSearch(keyword, placesSearchCB, { location: new kakao.maps.LatLng(route_list[i][0], route_list[i][1]), radius: 500 });
             }
-        }
-
-        function callback2(keyword, callback) {
-            console.log("start");
-            console.log("1");
-            callback1(keyword);
+            if(count == route_list.length){
             callback();
+            }
             console.log("4");
         }
 
-        function callback3() {
+        function callback2() {
             console.log("2");
             console.log(data_list);
             var data_list_ = data_list.reduce((prev, now) => {
@@ -202,9 +204,7 @@
         var count=0;
 
         function placesSearchCB(data, status, pagination) {
-            // console.log(count);
-            //     count+=1;
-            // console.log(status);
+            count+=1;
             if (status === kakao.maps.services.Status.OK) {
                 data_list = data_list.concat(data);
                 console.log(data);
