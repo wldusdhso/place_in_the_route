@@ -173,9 +173,10 @@
         function callback1(keyword, callback) {
             console.log("start");
             for (i = 0; i < route_list.length; i++) {
+                console.log(route_list);
                 (function(i, keyword){
+                    console.log(route_list);
                     this.setTimeout( function(){
-                        console.log(route_list);
                         ps.keywordSearch(keyword, placesSearchCB, { location: new kakao.maps.LatLng(route_list[i][0], route_list[i][1]), radius: 500 });
                     }, 10)
                 })(i, keyword)
