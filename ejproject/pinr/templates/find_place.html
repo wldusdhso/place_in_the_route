@@ -169,16 +169,28 @@
                 return false;
             }
 
-            for (i = 0; i < route_list.length; i++) {
-                ps.keywordSearch(keyword, placesSearchCB, { location: new kakao.maps.LatLng(route_list[i][0], route_list[i][1]), radius: 500 });
-            }
-            var timer = setTimeout(display, 100000);
+            callback1(keyword);
+            var timerId2 = setTimeout(callback2, 5000);
             if( count == route_list.length){
-            clearTimeout(timer);
+            clearTimeout(timerId2);
             }
         }
 
-        function display() {
+
+        function callback1(keyword) {
+            console.log("start");
+            console.log("1");
+            for (i = 0; i < route_list.length; i++) {
+                ps.keywordSearch(keyword, placesSearchCB, { location: new kakao.maps.LatLng(route_list[i][0], route_list[i][1]), radius: 500 });
+            }
+            console.log(route_list.length);
+            console.log("4");
+        }
+
+        
+
+        function callback2() {
+            console.log("2");
             var data_list_ = data_list.reduce((prev, now) => {
                 if (!prev.some(obj => obj.id === now.id)) {
                     prev.push(now);
@@ -187,13 +199,17 @@
 
             }, []);
             displayPlaces(data_list_);
+            console.log("3");
         }
 
 
         function placesSearchCB(data, status, pagination) {
             count+=1;
+
             if (status === kakao.maps.services.Status.OK) {
                 data_list = data_list.concat(data);
+                console.log(data);
+
             } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
                 return;
 
