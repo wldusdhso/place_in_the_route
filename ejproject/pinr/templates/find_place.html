@@ -173,11 +173,12 @@
         function callback1(keyword, callback) {
             console.log("start");
             for (i = 0; i < route_list.length; i++) {
-                (function(){
-                    setTimeout( function(){
-                    ps.keywordSearch(keyword, placesSearchCB, { location: new kakao.maps.LatLng(route_list[i][0], route_list[i][1]), radius: 500 });
+                (function(keyword){
+                    setTimeout( function(keyword){
+                        console.log(route_list[i]);
+                        ps.keywordSearch(keyword, placesSearchCB, { location: new kakao.maps.LatLng(route_list[i][0], route_list[i][1]), radius: 500 });
                     }, 10)
-                })()
+                })(keyword)
             }
             console.log("1");
             callback();
