@@ -173,10 +173,9 @@
         function callback1(keyword, callback) {
             console.log("start");
             for (i = 0; i < route_list.length; i++) {
-                this.setTimeout( (function(i){
-                    console.log(keyword);
-                    ps.keywordSearch(keyword, placesSearchCB, { location: new kakao.maps.LatLng(route_list[i][0], route_list[i][1]), radius: 500 });
-                })(i), 10)
+                this.setTimeout(
+                    ps.keywordSearch(keyword, placesSearchCB, { location: new kakao.maps.LatLng(route_list[i][0], route_list[i][1]), radius: 500 })
+                , 10)
             }
             console.log("1");
             return callback();
