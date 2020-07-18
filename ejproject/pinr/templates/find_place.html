@@ -121,7 +121,6 @@
 
         function drawKakaoPolyLine(data) {
             var lineArray;
-            console.log(data.result.lane)
             for (var i = 0; i < data.result.lane.length; i++) {
                 for (var j = 0; j < data.result.lane[i].section.length; j++) {
                     lineArray = null;
@@ -208,7 +207,6 @@
 
             if (status === kakao.maps.services.Status.OK) {
                 data_list = data_list.concat(data);
-                console.log(data);
 
             } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
                 return;
