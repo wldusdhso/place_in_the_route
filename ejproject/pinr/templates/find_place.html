@@ -194,10 +194,11 @@
         var count=0;
 
         function placesSearchCB(data, status, pagination) {
+            console.log(count);
+                count+=1;
             if (status === kakao.maps.services.Status.OK) {
                 data_list = data_list.concat(data)
-                console.log(count);
-                count+=1;
+                
 
             } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
                 return;
