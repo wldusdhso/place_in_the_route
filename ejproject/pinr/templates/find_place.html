@@ -96,7 +96,6 @@
         callMapObjApiAJAX(route.info.mapObj);
 
         function callMapObjApiAJAX(mabObj) {
-            console.log("callMapObjApiAJAX")
             var xhr = new XMLHttpRequest();
             //ODsay apiKey 입력
             var url = "https://api.odsay.com/v1/api/loadLane?mapObject=0:0@" + mabObj + "&apiKey=Z1tI1PHDPV7ueYpK4TUU2A";
@@ -173,7 +172,6 @@
 
             console.log("start");
             count=0;
-            console.log(route_list)
             for (i = 0; i < route_list.length; i++) {
                 ps.keywordSearch(keyword, placesSearchCB, { location: new kakao.maps.LatLng(route_list[i][0], route_list[i][1]), radius: 500 });
             }
@@ -195,6 +193,7 @@
             }
 
             if( count == route_list.length){
+                console.log("callback")
                 callback();
             }
         }
